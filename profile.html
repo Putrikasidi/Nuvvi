@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profile — Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-cream font-sans text-cocoa" data-page="profile">
+    <div class="lg:flex">
+      <aside id="app-sidebar"></aside>
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+        <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
+
+        <main class="flex-1 p-3 sm:p-5 lg:p-6">
+          <div class="space-y-6 rounded-card bg-sage p-4 sm:p-6">
+            <!-- Banner maskot -->
+            <div class="rounded-card bg-sun p-6">
+              <div class="flex flex-wrap items-center justify-center gap-6">
+                <div class="flex items-center gap-3">
+                  <img src="assets/img/mascot-vivi-crossed-lg.png" alt="Maskot Vivi" class="w-20" />
+                  <p class="max-w-[200px] rounded-2xl bg-white p-3 text-sm shadow-soft-sm">
+                    "Good Morning! I'm Vivi, I'll be your little buddy, cheering you on every step of
+                    your healthy journey!"
+                  </p>
+                </div>
+                <img src="assets/img/mascot-mia-circle.png" alt="Foto profil Mia" class="w-24 rounded-full" />
+                <div class="flex items-center gap-3">
+                  <p class="max-w-[200px] rounded-2xl bg-white p-3 text-sm shadow-soft-sm">
+                    "Haii, I'm Nuna. I'll be here to help you along the way."
+                  </p>
+                  <img src="assets/img/mascot-nuna-wave.png" alt="Maskot Nuna" class="w-20" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <div class="rounded-card bg-sage-dark p-6 text-white sm:p-8">
+              <div class="mb-6 flex justify-center">
+                <button
+                  id="nv-profile-edit"
+                  type="button"
+                  class="nv-btn !bg-sun !text-cocoa"
+                >
+                  Edit profile info
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 20h4L20 8l-4-4L4 16Z" /><path d="m14 6 4 4" />
+                  </svg>
+                </button>
+              </div>
+
+              <form id="nv-profile-form" class="mx-auto max-w-2xl space-y-4">
+                <div>
+                  <label class="mb-1 block font-display font-bold" for="name">Name</label>
+                  <input id="name" name="name" type="text" class="nv-input !bg-white/60 !text-cocoa" />
+                </div>
+                <div>
+                  <label class="mb-1 block font-display font-bold" for="username">Username</label>
+                  <input id="username" name="username" type="text" class="nv-input !bg-white/60 !text-cocoa" />
+                </div>
+                <div>
+                  <label class="mb-1 block font-display font-bold" for="gender">Gender</label>
+                  <input id="gender" name="gender" type="text" class="nv-input !bg-white/60 !text-cocoa" />
+                </div>
+                <div>
+                  <label class="mb-1 block font-display font-bold" for="phone">Phone Number</label>
+                  <input id="phone" name="phone" type="text" class="nv-input !bg-white/60 !text-cocoa" />
+                </div>
+                <div>
+                  <label class="mb-1 block font-display font-bold" for="email">Email</label>
+                  <input id="email" name="email" type="email" class="nv-input !bg-white/60 !text-cocoa" />
+                </div>
+                <div>
+                  <label class="mb-1 block font-display font-bold" for="address">Address</label>
+                  <input id="address" name="address" type="text" class="nv-input !bg-white/60 !text-cocoa" />
+                </div>
+
+                <div id="nv-profile-actions" class="hidden gap-3 pt-2">
+                  <button type="submit" class="nv-btn nv-btn--primary flex-1">Simpan</button>
+                  <button type="button" data-profile-cancel class="nv-btn nv-btn--ghost flex-1">Batal</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="app-backdrop" class="fixed inset-0 z-40 hidden bg-black/30 lg:hidden"></div>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

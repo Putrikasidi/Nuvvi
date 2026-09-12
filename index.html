@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nuvvi — Eat Better, Live Healthier</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-leaf font-sans text-cocoa" data-page="home">
+    <!-- ===== Navbar (dipakai juga di pricing / login / register) ===== -->
+    <header class="relative z-20">
+      <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 md:px-8">
+        <a href="index.html" class="flex items-center gap-2">
+          <img src="assets/img/logo.png" alt="Logo Nuvvi" class="h-10 w-10 rounded-full object-cover" />
+          <span class="font-display text-2xl font-extrabold">Nuvvi</span>
+        </a>
+        <button
+          type="button"
+          data-nav-toggle
+          aria-label="Buka menu"
+          class="rounded-2xl bg-white/70 p-2 text-cocoa md:hidden"
+        >
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+        <div
+          data-nav-menu
+          class="hidden w-full flex-col gap-2 py-2 md:flex md:w-auto md:flex-row md:items-center md:gap-1 md:py-0"
+        >
+          <a href="index.html" class="nv-nav-pill nv-nav-pill--active">Home</a>
+          <a href="pricing.html" class="nv-nav-pill">Pricing</a>
+          <a href="dashboard.html" class="nv-nav-pill">Try me!</a>
+          <a href="login.html" class="nv-nav-pill">Login</a>
+          <a href="register.html" class="nv-btn nv-btn--ghost !bg-sun !px-5 !py-2">Create</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ===== Hero ===== -->
+    <section class="relative overflow-hidden">
+      <!-- garis "jalan" dekoratif (samar, hanya di layar besar) -->
+      <svg
+        class="pointer-events-none absolute right-0 top-0 hidden h-64 w-[38rem] text-cocoa/25 lg:block"
+        viewBox="0 0 600 260"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="10"
+        stroke-dasharray="1 22"
+        stroke-linecap="round"
+      >
+        <path d="M-20 40 C 140 40, 180 200, 320 200 S 520 60, 640 90" />
+      </svg>
+
+      <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-6 md:px-8 lg:grid-cols-2 lg:pb-24">
+        <div class="nv-reveal">
+          <h1 class="font-display text-5xl font-extrabold leading-tight md:text-6xl">
+            Eat Better,<br />Live Healthier
+          </h1>
+          <p class="mt-5 max-w-md text-lg text-cocoa/80">
+            Discover what's in your food, understand how it affects your health, and make better
+            choices every day.
+          </p>
+          <a href="dashboard.html" class="nv-btn nv-btn--primary mt-8 !px-12 !py-4 text-lg">Start</a>
+        </div>
+
+        <div class="nv-reveal relative">
+          <div class="rounded-[40px] bg-sun/70 p-5 shadow-soft">
+            <img
+              src="assets/img/preview-dashboard.png"
+              alt="Cuplikan dashboard Nuvvi"
+              class="w-full rounded-3xl bg-white shadow-soft"
+            />
+          </div>
+          <img
+            src="assets/img/mascot-vivi-phone.png"
+            alt=""
+            class="absolute -bottom-10 -left-4 w-28 md:w-40"
+          />
+          <img
+            src="assets/img/mascot-excited.png"
+            alt=""
+            class="absolute right-2 -top-10 hidden w-20 sm:block md:w-24"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Fitur (tab menukar gambar) ===== -->
+    <section class="bg-white/40 py-16">
+      <div class="mx-auto max-w-7xl px-4 md:px-8">
+        <h2 class="nv-reveal text-center font-display text-3xl font-extrabold md:text-4xl">
+          Kenali fitur Nuvvi
+        </h2>
+        <p class="nv-reveal mx-auto mt-2 max-w-xl text-center text-cocoa/70">
+          Semua yang kamu butuhkan untuk hidup lebih sehat, dalam satu aplikasi.
+        </p>
+
+        <div class="nv-reveal mt-8 flex flex-wrap justify-center gap-2">
+          <button type="button" data-feature-tab="dashboard" class="nv-nav-pill nv-nav-pill--active">Dashboard</button>
+          <button type="button" data-feature-tab="mealplan" class="nv-nav-pill">Meal Plan</button>
+          <button type="button" data-feature-tab="sport" class="nv-nav-pill">Sport Plan</button>
+          <button type="button" data-feature-tab="wellness" class="nv-nav-pill">Wellness</button>
+          <button type="button" data-feature-tab="komunitas" class="nv-nav-pill">Komunitas</button>
+        </div>
+
+        <div class="nv-reveal mt-8 overflow-hidden rounded-card bg-sun/40 p-4 shadow-soft md:p-8">
+          <img
+            id="nv-feature-image"
+            src="assets/img/preview-dashboard.png"
+            alt="Tampilan Dashboard"
+            class="mx-auto w-full max-w-4xl rounded-2xl bg-white shadow-soft"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA harga ===== -->
+    <section class="py-16">
+      <div class="mx-auto max-w-5xl px-4 md:px-8">
+        <div class="nv-reveal rounded-card bg-forest px-6 py-10 text-center text-white shadow-soft md:px-12">
+          <h2 class="font-display text-3xl font-extrabold md:text-4xl">Coba gratis selama 1 minggu</h2>
+          <p class="mx-auto mt-3 max-w-xl text-white/80">
+            Akses semua fitur premium Nuvvi tanpa biaya. Lihat pilihan paketnya di halaman harga.
+          </p>
+          <div class="mt-7 flex flex-wrap justify-center gap-3">
+            <a href="pricing.html" class="nv-btn !bg-sun !text-cocoa">Lihat Harga</a>
+            <a href="register.html" class="nv-btn nv-btn--ghost">Buat Akun</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="border-t border-cocoa/10 py-8 text-center text-sm text-cocoa/60">
+      <div class="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4">
+        <div class="flex items-center gap-2">
+          <img src="assets/img/logo.png" alt="" class="h-7 w-7 rounded-full" />
+          <span class="font-display font-bold text-cocoa">Nuvvi</span>
+        </div>
+        <p>&copy; 2026 Nuvvi. Eat better, live healthier.</p>
+      </div>
+    </footer>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

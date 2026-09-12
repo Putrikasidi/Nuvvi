@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard — Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-cream font-sans text-cocoa" data-page="dashboard">
+    <div class="lg:flex">
+      <aside id="app-sidebar"></aside>
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+        <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
+
+        <main class="flex-1 p-3 sm:p-5 lg:p-6">
+          <div class="rounded-card bg-sage p-4 sm:p-6">
+            <div class="grid gap-5 lg:grid-cols-2">
+              <!-- Kolom kiri -->
+              <div class="space-y-5">
+                <!-- Hero -->
+                <div class="relative overflow-hidden rounded-card bg-sun p-6">
+                  <h2 class="font-display text-3xl font-extrabold text-forest">GOOD MORNING, MIA!</h2>
+                  <p class="mt-1 text-cocoa/80">Know Your Food, Know Your Health</p>
+                  <a href="meal-plan.html" class="nv-btn nv-btn--primary mt-5">Scan Your Food</a>
+                  <img
+                    src="assets/img/mascot-vivi-phone.png"
+                    alt=""
+                    class="pointer-events-none absolute -bottom-4 right-2 w-28 sm:w-36"
+                  />
+                </div>
+
+                <!-- Nutrisi -->
+                <div id="nv-nutrients" class="grid gap-3 sm:grid-cols-2"></div>
+              </div>
+
+              <!-- Kolom kanan -->
+              <div class="space-y-5">
+                <!-- Daily Reflection -->
+                <div class="nv-card">
+                  <h3 class="font-display text-xl font-extrabold">Daily Reflection</h3>
+                  <div class="mt-4 flex flex-wrap items-center gap-6">
+                    <div id="nv-donut" class="grid h-40 w-40 shrink-0 place-items-center rounded-full">
+                      <div class="h-20 w-20 rounded-full bg-white"></div>
+                    </div>
+                    <ul id="nv-donut-legend" class="flex-1 space-y-2"></ul>
+                  </div>
+                </div>
+
+                <!-- Recent Scans -->
+                <div class="nv-card">
+                  <div class="mb-4 flex items-center justify-between">
+                    <h3 class="font-display text-xl font-extrabold">Recent Scans</h3>
+                    <a href="meal-plan.html" class="text-sm font-bold text-amber-cta">View All &rsaquo;</a>
+                  </div>
+                  <ul id="nv-recent-scans" class="space-y-4"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="app-backdrop" class="fixed inset-0 z-40 hidden bg-black/30 lg:hidden"></div>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

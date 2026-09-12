@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meal Plan — Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-cream font-sans text-cocoa" data-page="meal-plan">
+    <div class="lg:flex">
+      <aside id="app-sidebar"></aside>
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+        <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
+
+        <main class="flex-1 p-3 sm:p-5 lg:p-6">
+          <div class="rounded-card border-4 border-sun bg-white p-4 sm:p-6">
+            <div class="grid gap-5 lg:grid-cols-2">
+              <!-- Upload -->
+              <div class="space-y-4">
+                <label
+                  class="flex min-h-[260px] cursor-pointer flex-col items-center justify-center gap-2 rounded-card border-2 border-dashed border-cocoa/40 p-6 text-center"
+                >
+                  <input id="nv-upload-input" type="file" accept="image/png,image/jpeg" class="sr-only" />
+                  <img id="nv-upload-preview" alt="Pratinjau foto makanan" class="hidden max-h-56 rounded-2xl object-contain" />
+                  <span id="nv-upload-placeholder" class="flex flex-col items-center gap-2 text-cocoa/70">
+                    <svg class="h-16 w-16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M4 8a2 2 0 0 1 2-2h2l1.2-2h5.6L18 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8Zm10 2.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" />
+                    </svg>
+                    <span class="font-display text-lg font-extrabold text-cocoa">Upload Foto Makanan</span>
+                    <span class="text-sm">(JPG, PNG, Maks 5 MB)</span>
+                  </span>
+                </label>
+                <div id="nv-scan-result" class="hidden rounded-card bg-leaf/50 p-5"></div>
+              </div>
+
+              <!-- Your Meal Plan -->
+              <div class="rounded-card bg-white p-5 shadow-soft">
+                <span class="mb-4 inline-block rounded-pill bg-sky px-4 py-1 font-display font-bold">Your Meal Plan</span>
+                <ul id="nv-meal-plan" class="space-y-5"></ul>
+              </div>
+            </div>
+
+            <!-- Recommended For You -->
+            <div class="mt-6 rounded-card bg-white p-5 shadow-soft">
+              <div class="mb-4 flex items-center justify-between">
+                <div>
+                  <h3 class="font-display text-xl font-extrabold">Recommended For You</h3>
+                  <p class="text-sm text-cocoa/60">Based on your nutrition intake today</p>
+                </div>
+              </div>
+              <div id="nv-recommended-meals" class="nv-scroll-row nv-no-scrollbar"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="app-backdrop" class="fixed inset-0 z-40 hidden bg-black/30 lg:hidden"></div>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

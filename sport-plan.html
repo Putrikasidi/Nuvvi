@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sport Plan — Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-cream font-sans text-cocoa" data-page="sport-plan">
+    <div class="lg:flex">
+      <aside id="app-sidebar"></aside>
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+        <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
+
+        <main class="flex-1 p-3 sm:p-5 lg:p-6">
+          <div class="space-y-5 rounded-card bg-sage p-4 sm:p-6">
+            <!-- Header + tanggal -->
+            <div class="rounded-card bg-sun p-6">
+              <h2 class="font-display text-3xl font-extrabold">Sport Plan</h2>
+              <p class="text-cocoa/80">Let's get excited about working out together!</p>
+              <div class="mt-4 flex items-center gap-2">
+                <button type="button" aria-label="Sebelumnya" class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-forest text-white">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 6-6 6 6 6" /></svg>
+                </button>
+                <div id="nv-sport-dates" class="nv-scroll-row nv-no-scrollbar"></div>
+              </div>
+            </div>
+
+            <div class="grid gap-5 lg:grid-cols-2">
+              <!-- Weekly Activity -->
+              <div class="nv-card">
+                <div class="mb-4 flex items-start justify-between">
+                  <div>
+                    <h3 class="font-display text-xl font-extrabold">Weekly Activity</h3>
+                    <p class="text-sm text-cocoa/60">Track your movement and stay consistent</p>
+                  </div>
+                  <span class="rounded-pill bg-sky px-3 py-1 text-sm font-bold">This week</span>
+                </div>
+                <div id="nv-weekly-chart" class="relative flex items-end gap-1"></div>
+              </div>
+
+              <!-- Activity Summary -->
+              <div class="nv-card">
+                <div class="mb-4 flex items-center justify-between">
+                  <h3 class="font-display text-xl font-extrabold">Your Activity Summary</h3>
+                  <span class="text-sm font-bold text-forest">See Detail &rsaquo;</span>
+                </div>
+                <div id="nv-activity-summary" class="flex flex-wrap items-center gap-6"></div>
+                <p class="mt-4 rounded-pill bg-sage-dark px-4 py-2 text-center text-sm font-bold text-white">
+                  You're doing great! Keep going to reach your daily goal.
+                </p>
+              </div>
+            </div>
+
+            <!-- Recommended Workouts -->
+            <div class="nv-card">
+              <h3 class="mb-4 font-display text-xl font-extrabold">Recommended Workouts</h3>
+              <div id="nv-workouts" class="nv-scroll-row nv-no-scrollbar"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="app-backdrop" class="fixed inset-0 z-40 hidden bg-black/30 lg:hidden"></div>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

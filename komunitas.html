@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Komunitas — Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-cream font-sans text-cocoa" data-page="komunitas">
+    <div class="lg:flex">
+      <aside id="app-sidebar"></aside>
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+        <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
+
+        <main class="flex-1 p-3 sm:p-5 lg:p-6">
+          <div class="space-y-5 rounded-card bg-sun/70 p-4 sm:p-6">
+            <!-- Banner -->
+            <div class="relative overflow-hidden rounded-card bg-[#5B4636] p-6 text-white">
+              <h2 class="font-display text-3xl font-extrabold">Komunitas</h2>
+              <p class="mt-1 font-display text-lg font-bold text-white/90">
+                Communication, Learn &middot; Share and Grow Together
+              </p>
+              <img src="assets/img/mascot-vivi-point.png" alt="" class="pointer-events-none absolute -bottom-2 right-4 w-24 sm:w-28" />
+            </div>
+
+            <!-- Toggle -->
+            <div class="flex gap-2">
+              <button type="button" data-komunitas-tab="komunitas" class="rounded-pill bg-forest px-5 py-2 font-display font-bold text-white">
+                Komunitas
+              </button>
+              <button type="button" data-komunitas-tab="artikel" class="rounded-pill bg-white/60 px-5 py-2 font-display font-bold text-cocoa/70">
+                Artikel
+              </button>
+            </div>
+
+            <!-- Panel Komunitas -->
+            <div data-komunitas-panel="komunitas">
+              <div class="rounded-card bg-sun-soft/80 p-5">
+                <h3 class="mb-4 text-center font-display text-2xl font-extrabold">Komunitas Populer</h3>
+                <div id="nv-communities" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3"></div>
+              </div>
+            </div>
+
+            <!-- Panel Artikel -->
+            <div data-komunitas-panel="artikel" class="hidden">
+              <div class="rounded-card bg-white p-5 shadow-soft">
+                <h3 class="mb-4 font-display text-xl font-extrabold">Artikel</h3>
+                <div id="nv-articles" class="space-y-2"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal artikel -->
+    <div id="nv-article-modal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/40 p-4">
+      <div class="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-card bg-white p-6 shadow-soft">
+        <div class="mb-3 flex items-start justify-between gap-4">
+          <h3 data-modal-title class="font-display text-2xl font-extrabold"></h3>
+          <button type="button" data-modal-close aria-label="Tutup" class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-leaf">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18" /></svg>
+          </button>
+        </div>
+        <img data-modal-img alt="" class="mb-4 h-44 w-full rounded-2xl object-cover" />
+        <p data-modal-body class="leading-relaxed text-cocoa/80"></p>
+        <button type="button" data-modal-close class="nv-btn nv-btn--primary mt-6 w-full">Tutup</button>
+      </div>
+    </div>
+
+    <div id="app-backdrop" class="fixed inset-0 z-40 hidden bg-black/30 lg:hidden"></div>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

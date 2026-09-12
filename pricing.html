@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Harga — Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-leaf font-sans text-cocoa" data-page="pricing">
+    <header class="relative z-20">
+      <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 md:px-8">
+        <a href="index.html" class="flex items-center gap-2">
+          <img src="assets/img/logo.png" alt="Logo Nuvvi" class="h-10 w-10 rounded-full object-cover" />
+          <span class="font-display text-2xl font-extrabold">Nuvvi</span>
+        </a>
+        <button type="button" data-nav-toggle aria-label="Buka menu" class="rounded-2xl bg-white/70 p-2 text-cocoa md:hidden">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+        <div data-nav-menu class="hidden w-full flex-col gap-2 py-2 md:flex md:w-auto md:flex-row md:items-center md:gap-1 md:py-0">
+          <a href="index.html" class="nv-nav-pill">Home</a>
+          <a href="pricing.html" class="nv-nav-pill nv-nav-pill--active">Pricing</a>
+          <a href="dashboard.html" class="nv-nav-pill">Try me!</a>
+          <a href="login.html" class="nv-nav-pill">Login</a>
+          <a href="register.html" class="nv-btn nv-btn--ghost !bg-sun !px-5 !py-2">Create</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-14 md:px-8">
+      <h1 class="text-center font-display text-4xl font-extrabold md:text-5xl">Pilih paket Nuvvi</h1>
+      <p class="mx-auto mt-3 max-w-xl text-center text-cocoa/70">
+        Mulai gratis, lanjutkan dengan premium kapan saja.
+      </p>
+
+      <div class="mt-12 grid gap-8 md:grid-cols-2">
+        <!-- Free Trial -->
+        <article class="rounded-card bg-white p-8 shadow-soft">
+          <h2 class="font-display text-3xl font-extrabold">Free Trial</h2>
+          <p class="mt-1 font-display text-2xl font-extrabold">Rp 0</p>
+          <p class="mt-4 text-cocoa/70">Akses ke semua fitur premium selama 1 minggu</p>
+          <ul class="mt-5 space-y-2 text-cocoa/80">
+            <li class="flex gap-2"><span class="text-forest">&#10003;</span> Akses ke semua fitur Nuvvi</li>
+            <li class="flex gap-2"><span class="text-forest">&#10003;</span> Meal Plan Personal</li>
+            <li class="flex gap-2"><span class="text-forest">&#10003;</span> Pengingat makan, minum obat, dan olahraga</li>
+            <li class="flex gap-2"><span class="text-forest">&#10003;</span> Akses artikel</li>
+            <li class="flex gap-2"><span class="text-forest">&#10003;</span> Bergabung ke komunitas</li>
+          </ul>
+          <a href="register.html" class="nv-btn nv-btn--primary mt-8 w-full">Mulai Gratis Sekarang</a>
+        </article>
+
+        <!-- Premium -->
+        <article class="rounded-card bg-white p-8 shadow-soft ring-2 ring-amber-cta/40">
+          <h2 class="font-display text-3xl font-extrabold">Nuvvi Premium</h2>
+          <p class="mt-1 font-display text-2xl font-extrabold">Rp 20.000 <span class="text-lg font-bold text-cocoa/60">/ bulan</span></p>
+          <p class="mt-4 text-cocoa/70">Lanjutkan perjalanan tanpa batas</p>
+          <ul class="mt-5 space-y-2 text-cocoa/80">
+            <li class="flex gap-2"><span class="text-amber-cta">&#10003;</span> Akses ke semua fitur Nuvvi</li>
+            <li class="flex gap-2"><span class="text-amber-cta">&#10003;</span> Reminder tanpa batas</li>
+            <li class="flex gap-2"><span class="text-amber-cta">&#10003;</span> Pengingat makan, minum obat, dan olahraga</li>
+            <li class="flex gap-2"><span class="text-amber-cta">&#10003;</span> Akses artikel</li>
+            <li class="flex gap-2"><span class="text-amber-cta">&#10003;</span> Bergabung ke komunitas</li>
+            <li class="flex gap-2"><span class="text-amber-cta">&#10003;</span> Laporan progress aktivitas</li>
+          </ul>
+          <a href="register.html" class="nv-btn nv-btn--cta mt-8 w-full">Langganan Sekarang</a>
+        </article>
+      </div>
+    </main>
+
+    <footer class="border-t border-cocoa/10 py-8 text-center text-sm text-cocoa/60">
+      <p>&copy; 2026 Nuvvi. Eat better, live healthier.</p>
+    </footer>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Account — Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="relative min-h-screen overflow-hidden bg-leaf font-sans text-cocoa" data-page="register">
+    <svg class="pointer-events-none absolute inset-x-0 bottom-0 -z-0 w-full" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="#BBD98C" fill-opacity="0.7" d="M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,213.3C840,224,960,224,1080,208C1200,192,1320,160,1380,144L1440,128L1440,320L0,320Z" />
+      <path fill="#A6CE79" fill-opacity="0.8" d="M0,256L80,245.3C160,235,320,213,480,218.7C640,224,800,256,960,256C1120,256,1280,224,1360,208L1440,192L1440,320L0,320Z" />
+    </svg>
+
+    <header class="relative z-10 flex items-center justify-between px-6 py-5 md:px-10">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="assets/img/logo.png" alt="Logo Nuvvi" class="h-10 w-10 rounded-full object-cover" />
+        <span class="font-display text-2xl font-extrabold">Nuvvi</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <img src="assets/img/avatar-mia.png" alt="" class="h-10 w-10 rounded-full object-cover" />
+        <span class="hidden leading-tight sm:block">
+          <span class="block font-display font-bold">Mia</span>
+          <span class="block text-xs text-cocoa/60">Stay Healthy!</span>
+        </span>
+      </div>
+    </header>
+
+    <main class="relative z-10 mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-6 py-10">
+      <h1 class="text-center font-display text-4xl font-extrabold leading-tight text-forest sm:text-5xl">
+        CREATE ACCOUNT
+      </h1>
+      <p class="mt-2 text-center text-forest/80">
+        Already Registered ?
+        <a href="login.html" class="font-bold underline">Log In Here</a>
+      </p>
+
+      <form data-auth="register" class="mt-10 space-y-5">
+        <div>
+          <label class="mb-1 block font-display font-bold" for="name">NAMA</label>
+          <input id="name" name="name" type="text" required placeholder="Nama kamu" class="nv-input" />
+        </div>
+        <div>
+          <label class="mb-1 block font-display font-bold" for="email">EMAIL</label>
+          <input id="email" name="email" type="email" required placeholder="nama@email.com" class="nv-input" />
+        </div>
+        <div>
+          <label class="mb-1 block font-display font-bold" for="password">PASSWORD</label>
+          <input id="password" name="password" type="password" required placeholder="******" class="nv-input" />
+        </div>
+        <button type="submit" class="nv-btn nv-btn--primary w-full">Sign Up</button>
+      </form>
+    </main>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
