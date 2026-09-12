@@ -1,4 +1,4 @@
-# Nuvvi — Eat Better, Live Healthier test
+# Nuvvi — Eat Better, Live Healthier
 
 Website kesehatan **Nuvvi**, dibangun mengikuti desain di `Desain Canva.pdf` untuk **Lomba Desain
 Web PNB ITC#18** (subtema Kesehatan).
