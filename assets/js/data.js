@@ -55,10 +55,42 @@ window.NUVVI_DATA = {
   ],
 
   /* "Your Meal Plan" di halaman Meal Plan */
+  /* Urutan macro mengikuti grid 2x2 di desain: kalori & karbo di baris atas,
+     protein & lemak di baris bawah (ikon dari assets/img/icon-*.png). */
   mealPlan: [
-    { meal: "Breakfast", name: "Yogurt Bowl", img: "food-yogurt.png", macros: ["24 g kcal", "67 g", "30 g", "20 g", "30 g"] },
-    { meal: "Lunch", name: "Egg & Avocado Toast", img: "food-toast.png", macros: ["24 g kcal", "67 g", "30 g", "20 g", "30 g"] },
-    { meal: "Dinner", name: "Oatmeal Banana Bowl", img: "food-oatmeal.png", macros: ["24 g kcal", "67 g", "30 g", "20 g", "30 g"] },
+    {
+      meal: "Breakfast",
+      name: "Yogurt Bowl",
+      img: "food-yogurt.png",
+      macros: [
+        { icon: "icon-calories.png", value: "24 g kcal" },
+        { icon: "icon-carbs.png", value: "30 g" },
+        { icon: "icon-protein.png", value: "67 g" },
+        { icon: "icon-fat.png", value: "20 g" },
+      ],
+    },
+    {
+      meal: "Lunch",
+      name: "Egg & Avocado Toast",
+      img: "food-toast.png",
+      macros: [
+        { icon: "icon-calories.png", value: "24 g kcal" },
+        { icon: "icon-carbs.png", value: "30 g" },
+        { icon: "icon-protein.png", value: "67 g" },
+        { icon: "icon-fat.png", value: "20 g" },
+      ],
+    },
+    {
+      meal: "Dinner",
+      name: "Oatmeal Banana Bowl",
+      img: "food-oatmeal.png",
+      macros: [
+        { icon: "icon-calories.png", value: "24 g kcal" },
+        { icon: "icon-carbs.png", value: "30 g" },
+        { icon: "icon-protein.png", value: "67 g" },
+        { icon: "icon-fat.png", value: "20 g" },
+      ],
+    },
   ],
 
   /* "Recommended For You" di halaman Meal Plan */
@@ -122,19 +154,41 @@ window.NUVVI_DATA = {
   ],
 
   /* "Jadwal Hari Ini" di Wellness. "group" dipakai untuk menghitung Progress Harian */
+  /* Jadwal sehari penuh - 3x makan, 3x minum obat, 3x minum air, 1x olahraga.
+     Jumlahnya sengaja dibuat 3/3/3/1 supaya progress di "Progress Harian" (Makan 2/3,
+     Minum Obat 1/3, dst - sesuai desain) benar-benar dihitung dari checklist ini,
+     bukan angka tetap. Centang/lepas centang di sini langsung mengubah ring progress. */
   wellnessSchedule: [
-    { id: "s1", title: "Breakfast", note: "Yogurt", time: "07.00", img: "meal-salad-man.png", group: "makan" },
-    { id: "s2", title: "Minum obat", note: "Vitamin Omega3", time: "08.00", img: "meal-pills.png", group: "obat" },
-    { id: "s3", title: "Minum air", note: "2 gelas", time: "09.00", img: "food-boba.png", group: "air" },
-    { id: "s4", title: "Olahraga", note: "30 menit - walking", time: "10.00", img: "workout-run.png", group: "olahraga" },
+    { id: "s1", title: "Sarapan", note: "Yogurt", time: "07.00", img: "meal-salad-man.png", group: "makan" },
+    { id: "s2", title: "Makan Siang", note: "Nasi & sayur", time: "12.00", img: "food-toast.png", group: "makan" },
+    { id: "s3", title: "Makan Malam", note: "Sup ayam", time: "19.00", img: "food-oatmeal.png", group: "makan" },
+    { id: "s4", title: "Minum Obat Pagi", note: "Vitamin Omega3", time: "08.00", img: "meal-pills.png", group: "obat" },
+    { id: "s5", title: "Minum Obat Siang", note: "Obat maag", time: "13.00", img: "meal-pills.png", group: "obat" },
+    { id: "s6", title: "Minum Obat Malam", note: "Vitamin C", time: "20.00", img: "meal-pills.png", group: "obat" },
+    { id: "s7", title: "Minum Air", note: "2 gelas", time: "09.00", img: "food-boba.png", group: "air" },
+    { id: "s8", title: "Minum Air", note: "2 gelas", time: "14.00", img: "food-boba.png", group: "air" },
+    { id: "s9", title: "Minum Air", note: "2 gelas", time: "18.00", img: "food-boba.png", group: "air" },
+    { id: "s10", title: "Olahraga", note: "30 menit - walking", time: "10.00", img: "workout-run.png", group: "olahraga" },
   ],
 
-  /* Target Progress Harian di Wellness (target dari jumlah jadwal per grup) */
+  /* Berapa banyak item jadwal per kategori yang sudah dicentang, saat pertama kali
+     dibuka (sebelum user mengubah apa pun) - dipilih supaya cocok dengan angka di
+     desain: Makan 2/3, Minum Obat 1/3, Minum Air 2/3, Olahraga 0/1. */
+  wellnessDoneDefault: {
+    s1: true, s2: true, s3: false,
+    s4: true, s5: false, s6: false,
+    s7: true, s8: true, s9: false,
+    s10: false,
+  },
+
+  /* Target Progress Harian di Wellness (target = jumlah jadwal per grup di atas). */
+  /* Urutan sesuai PDF: kolom kiri Makan/Minum Obat/Olahraga bertumpuk, kolom kanan Minum Air.
+     Dipasangkan dengan #nv-progress-rings yang pakai grid-flow-col grid-rows-3. */
   wellnessTargets: [
-    { group: "makan", label: "Makan", color: "#6E9A46", target: 1 },
-    { group: "air", label: "Minum Air", color: "#E0930E", target: 1 },
-    { group: "obat", label: "Minum Obat", color: "#E4574C", target: 1 },
+    { group: "makan", label: "Makan", color: "#6E9A46", target: 3 },
+    { group: "obat", label: "Minum Obat", color: "#E4574C", target: 3 },
     { group: "olahraga", label: "Olahraga", color: "#3E9BD1", target: 1 },
+    { group: "air", label: "Minum Air", color: "#E0930E", target: 3 },
   ],
 
   /* Pertanyaan Wellness (dijawab satu per satu). Sesuai Desain Canva.pdf hal. 15-22 */
@@ -192,10 +246,10 @@ window.NUVVI_DATA = {
   /* Kartu di halaman Komunitas */
   communities: [
     { id: "c1", name: "Lari Pagi Bersama", members: 270, img: "community-run.png" },
-    { id: "c2", name: "Dapur Sehat", members: 270, img: "community-noodle.png" },
-    { id: "c3", name: "Yoga & Mindful", members: 270, img: "community-hockey.png" },
-    { id: "c4", name: "Diet Seimbang", members: 270, img: "community-run.png" },
-    { id: "c5", name: "Teman Olahraga Sore", members: 270, img: "community-hockey.png" },
+    { id: "c2", name: "Dapur Sehat", members: 270, img: "food-toast.png" },
+    { id: "c3", name: "Yoga & Mindful", members: 270, img: "workout-yoga.png" },
+    { id: "c4", name: "Diet Seimbang", members: 270, img: "food-oatmeal.png" },
+    { id: "c5", name: "Teman Olahraga Sore", members: 270, img: "workout-walking.png" },
     { id: "c6", name: "Hidup Tanpa Gula", members: 270, img: "community-noodle.png" },
   ],
 
@@ -203,25 +257,25 @@ window.NUVVI_DATA = {
     {
       id: "a1",
       title: "Manfaat olahraga untuk kesehatan mental",
-      img: "community-run.png",
+      img: "workout-pilates.png",
       body: "Olahraga teratur membantu tubuh melepaskan endorfin yang membuat suasana hati lebih baik, mengurangi stres, dan memperbaiki kualitas tidur. Mulai dari 20 menit jalan kaki setiap hari sudah cukup untuk merasakan manfaatnya.",
     },
     {
       id: "a2",
       title: "Cara Mengatur Kalori Seharian",
-      img: "community-noodle.png",
+      img: "food-chicken.png",
       body: "Kenali kebutuhan kalori harianmu, lalu bagi ke dalam sarapan, makan siang, makan malam, dan camilan. Utamakan protein dan serat agar kenyang lebih lama, serta batasi minuman manis.",
     },
     {
       id: "a3",
       title: "Sarapan sehat untuk pagi yang cerah",
-      img: "community-hockey.png",
+      img: "food-yogurt.png",
       body: "Sarapan bergizi seimbang seperti oatmeal dengan buah atau telur dengan roti gandum memberi energi stabil sampai siang dan membantu konsentrasi saat beraktivitas.",
     },
     {
       id: "a4",
       title: "6 penyakit berbahaya bagi tubuh",
-      img: "community-run.png",
+      img: "workout-cardio.png",
       body: "Pola makan tinggi gula dan garam serta kurang gerak meningkatkan risiko diabetes, hipertensi, penyakit jantung, obesitas, kolesterol tinggi, dan gangguan ginjal. Pemeriksaan rutin membantu deteksi dini.",
     },
   ],

@@ -34,6 +34,7 @@ module.exports = {
       borderRadius: {
         card: "28px",
         pill: "9999px",
+        btn: "18px", // sudut tombol utama (Start, Login, dst) - membulat tapi tidak sampai pill
       },
       boxShadow: {
         soft: "0 10px 30px rgba(74, 42, 22, 0.10)",

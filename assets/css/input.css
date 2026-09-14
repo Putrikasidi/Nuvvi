@@ -11,7 +11,7 @@
 @layer components {
   /* ---------- Tombol ---------- */
   .nv-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-pill px-6 py-3
+    @apply inline-flex items-center justify-center gap-2 rounded-btn px-6 py-3
            font-display font-bold text-base leading-none transition
            active:scale-[0.98] focus:outline-none focus-visible:ring-4;
   }

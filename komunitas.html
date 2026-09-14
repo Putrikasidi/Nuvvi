@@ -19,43 +19,71 @@
       <div class="flex min-h-screen min-w-0 flex-1 flex-col">
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
-        <main class="flex-1 p-3 sm:p-5 lg:p-6">
-          <div class="space-y-5 rounded-card bg-sun/70 p-4 sm:p-6">
+        <main class="flex-1 space-y-5 bg-sun p-4 sm:p-6 lg:p-8">
             <!-- Banner -->
-            <div class="relative overflow-hidden rounded-card bg-[#5B4636] p-6 text-white">
-              <h2 class="font-display text-3xl font-extrabold">Komunitas</h2>
-              <p class="mt-1 font-display text-lg font-bold text-white/90">
-                Communication, Learn &middot; Share and Grow Together
-              </p>
-              <img src="assets/img/mascot-vivi-point.png" alt="" class="pointer-events-none absolute -bottom-2 right-4 w-24 sm:w-28" />
-            </div>
+            <div class="relative min-h-[190px] overflow-hidden rounded-card bg-[#5B4636] p-6 text-white sm:min-h-[240px]">
+              <!-- Bubble hijau dekoratif: beberapa bentuk kecil tersebar, kesan abstrak -->
+              <svg class="pointer-events-none absolute -left-4 -top-6 h-16 w-16 sm:h-20 sm:w-20" viewBox="-100 -100 200 200" aria-hidden="true">
+                <path d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z" fill="#8FA36B" fill-opacity="0.4" />
+              </svg>
+              <svg class="pointer-events-none absolute left-[36%] top-[10%] h-12 w-12 sm:h-16 sm:w-16" viewBox="-100 -100 200 200" aria-hidden="true">
+                <path d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z" fill="#8FA36B" fill-opacity="0.45" />
+              </svg>
+              <svg class="pointer-events-none absolute left-[58%] bottom-1 h-10 w-10 sm:h-14 sm:w-14" viewBox="-100 -100 200 200" aria-hidden="true">
+                <path d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z" fill="#8FA36B" fill-opacity="0.5" />
+              </svg>
+              <svg class="pointer-events-none absolute -right-6 -top-8 h-16 w-16 sm:h-20 sm:w-20" viewBox="-100 -100 200 200" aria-hidden="true">
+                <path d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z" fill="#8FA36B" fill-opacity="0.4" />
+              </svg>
+              <svg class="pointer-events-none absolute left-[15%] bottom-2 h-8 w-8 sm:h-10 sm:w-10" viewBox="-100 -100 200 200" aria-hidden="true">
+                <path d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z" fill="#8FA36B" fill-opacity="0.35" />
+              </svg>
 
-            <!-- Toggle -->
-            <div class="flex gap-2">
-              <button type="button" data-komunitas-tab="komunitas" class="rounded-pill bg-forest px-5 py-2 font-display font-bold text-white">
-                Komunitas
-              </button>
-              <button type="button" data-komunitas-tab="artikel" class="rounded-pill bg-white/60 px-5 py-2 font-display font-bold text-cocoa/70">
-                Artikel
-              </button>
-            </div>
-
-            <!-- Panel Komunitas -->
-            <div data-komunitas-panel="komunitas">
-              <div class="rounded-card bg-sun-soft/80 p-5">
-                <h3 class="mb-4 text-center font-display text-2xl font-extrabold">Komunitas Populer</h3>
-                <div id="nv-communities" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3"></div>
+              <div class="relative max-w-[52%] sm:max-w-[65%]">
+                <h2 class="font-display text-3xl font-extrabold">Komunitas</h2>
+                <p class="mt-1 font-display text-lg font-bold text-white/90">
+                  Communication, Learn &middot; Share and Grow Together
+                </p>
               </div>
+              <img src="assets/img/mascot-vivi-point.png" alt="" class="pointer-events-none absolute bottom-2 right-4 w-40 sm:w-52" />
             </div>
 
-            <!-- Panel Artikel -->
-            <div data-komunitas-panel="artikel" class="hidden">
-              <div class="rounded-card bg-white p-5 shadow-soft">
-                <h3 class="mb-4 font-display text-xl font-extrabold">Artikel</h3>
-                <div id="nv-articles" class="space-y-2"></div>
+            <!-- Konten utama + sidebar Artikel (selalu tampil), seperti desain -->
+            <div class="grid gap-5 lg:grid-cols-3">
+              <div class="space-y-5 lg:col-span-2">
+                <!-- Toggle -->
+                <div class="flex gap-2">
+                  <button type="button" data-komunitas-tab="komunitas" class="rounded-pill bg-forest px-5 py-2 font-display font-bold text-white">
+                    Komunitas
+                  </button>
+                  <button type="button" data-komunitas-tab="artikel" class="rounded-pill bg-white/60 px-5 py-2 font-display font-bold text-cocoa/70">
+                    Artikel
+                  </button>
+                </div>
+
+                <!-- Panel Komunitas -->
+                <div data-komunitas-panel="komunitas">
+                  <div class="rounded-card bg-sun-soft/80 p-5">
+                    <h3 class="mb-4 text-center font-display text-2xl font-extrabold">Komunitas Populer</h3>
+                    <div id="nv-communities" class="grid gap-3 sm:grid-cols-2"></div>
+                  </div>
+                </div>
+
+                <!-- Panel Artikel -->
+                <div data-komunitas-panel="artikel" class="hidden">
+                  <div class="rounded-card bg-white p-5 shadow-soft">
+                    <h3 class="mb-4 font-display text-xl font-extrabold">Artikel</h3>
+                    <div id="nv-articles" class="space-y-2"></div>
+                  </div>
+                </div>
               </div>
+
+              <!-- Sidebar: menampilkan kebalikan dari tab yang aktif di sebelah kiri -->
+              <aside class="rounded-card bg-sun-soft/80 p-5">
+                <span id="nv-sidebar-label" class="nv-nav-pill nv-nav-pill--active inline-block !bg-good/60">Artikel</span>
+                <div id="nv-sidebar-list" class="mt-4 space-y-3"></div>
+              </aside>
             </div>
-          </div>
         </main>
       </div>
     </div>

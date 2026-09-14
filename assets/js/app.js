@@ -232,7 +232,7 @@
             s.color +
             '"></span>' +
             esc(s.label) +
-            ' <span class="text-cocoa/50">' +
+            ' <span class="text-cocoa/70">' +
             s.value +
             "%</span></li>"
           );
@@ -350,10 +350,16 @@
             '</span><span class="block text-sm text-cocoa/60">' +
             esc(m.name) +
             "</span></span>" +
-            '<span class="hidden flex-wrap gap-1 sm:flex">' +
+            '<span class="hidden grid-cols-2 gap-x-3 gap-y-1 sm:grid">' +
             m.macros
               .map(function (x) {
-                return '<span class="rounded-pill bg-leaf/60 px-2 py-1 text-xs text-cocoa/70">' + esc(x) + "</span>";
+                return (
+                  '<span class="flex items-center gap-1 text-xs text-cocoa/70"><img src="' +
+                  img(x.icon) +
+                  '" alt="" class="h-3.5 w-3.5">' +
+                  esc(x.value) +
+                  "</span>"
+                );
               })
               .join("") +
             "</span></li>"
@@ -429,65 +435,113 @@
           .join("") +
         "</div>";
       var bars = D.weeklyActivity
-        .map(function (d) {
+        .map(function (d, i) {
           var h = Math.round((d.value / D.weeklyActivityMax) * 100);
           return (
-            '<div class="relative z-10 flex flex-1 flex-col items-center gap-2">' +
+            '<button type="button" data-bar="' +
+            i +
+            '" class="group relative z-10 flex flex-1 cursor-pointer flex-col items-center gap-2">' +
+            '<span class="pointer-events-none text-[11px] font-bold text-cocoa">' +
+            d.value.toLocaleString("id-ID") +
+            "</span>" +
             '<div class="flex h-40 w-full items-end justify-center">' +
-            '<div class="w-7 rounded-t-lg bg-forest" style="height:' +
+            '<div data-bar-fill class="w-7 rounded-t-lg bg-forest transition group-hover:bg-sage-dark" style="height:' +
             h +
             '%"></div></div>' +
             '<span class="text-xs text-cocoa/60">' +
             esc(d.day) +
-            "</span></div>"
+            "</span></button>"
           );
         })
         .join("");
       chart.innerHTML =
         grid +
-        '<div class="flex w-10 flex-col justify-between pr-1 text-right text-[10px] text-cocoa/40" style="height:10rem">' +
+        '<div class="flex w-10 flex-col justify-between pr-1 text-right text-[10px] font-bold text-cocoa/60" style="height:10rem">' +
         axis +
         "</div>" +
         bars;
+
+      // Klik batang -> highlight + tampilkan rincian kalori hari itu (bisa dipakai, bukan cuma dilihat)
+      var summaryEl = qs("#nv-weekly-summary");
+      var dayNames = { Mon: "Senin", Tue: "Selasa", Wed: "Rabu", Thu: "Kamis", Fri: "Jumat", Sat: "Sabtu", Sun: "Minggu" };
+      chart.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-bar]");
+        if (!b) return;
+        var d = D.weeklyActivity[Number(b.getAttribute("data-bar"))];
+        qsa("[data-bar-fill]", chart).forEach(function (f) {
+          f.classList.remove("bg-amber-cta");
+          f.classList.add("bg-forest");
+        });
+        qs("[data-bar-fill]", b).classList.remove("bg-forest");
+        qs("[data-bar-fill]", b).classList.add("bg-amber-cta");
+        if (summaryEl) {
+          summaryEl.textContent =
+            (dayNames[d.day] || d.day) + ": " + d.value.toLocaleString("id-ID") + " kcal terbakar";
+        }
+      });
     }
 
     // Activity summary ring
     var sum = qs("#nv-activity-summary");
     if (sum) {
       var a = D.activitySummary;
+      var clockIcon2 =
+        '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="#2b6cb0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>';
+      var footIcon =
+        '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="#8a6410" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="7" rx="2.4" ry="3.2"/><path d="M8 12c0 3-2 4-2 7a2 2 0 0 0 2 2c2 0 2-2 4-2s2 2 3 2a2 2 0 0 0 2-2c0-4-3-4-3-8"/></svg>';
       sum.innerHTML =
-        '<div class="grid h-32 w-32 shrink-0 place-items-center rounded-full" style="background:conic-gradient(#6E9A46 ' +
+        '<div class="grid h-36 w-36 shrink-0 place-items-center rounded-full" style="background:conic-gradient(#6E9A46 ' +
         a.percent +
         "%, #DDE9CE " +
         a.percent +
         '%)">' +
-        '<div class="grid h-24 w-24 place-items-center rounded-full bg-white font-display text-2xl font-extrabold text-cocoa">' +
+        '<div class="grid h-28 w-28 place-items-center rounded-full bg-white font-display text-2xl font-extrabold text-cocoa">' +
         a.percent +
         "%</div></div>" +
-        '<ul class="space-y-2 text-sm">' +
-        '<li><b class="font-display text-base">' + esc(a.calories) + "</b> <span class='text-cocoa/60'>Calories Burned</span></li>" +
-        '<li><b class="font-display text-base">' + esc(a.activeTime) + "</b> <span class='text-cocoa/60'>Active Time</span></li>" +
-        '<li><b class="font-display text-base">' + esc(a.steps) + "</b> <span class='text-cocoa/60'>Total steps</span></li>" +
+        '<ul class="space-y-3 text-sm">' +
+        '<li class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-high/30">' +
+        '<img src="' + img("icon-calories.png") + '" alt="" class="h-5 w-5"></span>' +
+        '<span><b class="block font-display text-base text-cocoa">' + esc(a.calories) + "</b><span class='text-cocoa/60'>Calories Burned</span></span></li>" +
+        '<li class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-sky">' +
+        clockIcon2 +
+        '</span><span><b class="block font-display text-base text-cocoa">' + esc(a.activeTime) + "</b><span class='text-cocoa/60'>Active Time</span></span></li>" +
+        '<li class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-sun-soft/70">' +
+        footIcon +
+        '</span><span><b class="block font-display text-base text-cocoa">' + esc(a.steps) + "</b><span class='text-cocoa/60'>Total steps</span></span></li>" +
         "</ul>";
     }
 
     // Recommended workouts
     var wk = qs("#nv-workouts");
     if (wk) {
+      var clockIcon =
+        '<svg class="h-4 w-4 shrink-0 text-cocoa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>';
       wk.innerHTML = D.recommendedWorkouts
         .map(function (w) {
           return (
-            '<article class="w-52 rounded-card bg-white p-4 shadow-soft-sm">' +
+            '<div class="flex w-60 items-center gap-3">' +
             '<img src="' +
             img(w.img) +
-            '" alt="" class="mb-3 h-28 w-full rounded-2xl object-cover">' +
+            '" alt="" class="h-20 w-20 shrink-0 rounded-2xl object-cover">' +
+            "<div>" +
             '<h4 class="font-display font-extrabold text-cocoa">' +
             esc(w.name) +
-            '</h4><p class="text-sm text-cocoa/60">' +
+            "</h4>" +
+            '<div class="mt-1 flex items-center gap-1.5">' +
+            '<img src="' +
+            img("icon-calories.png") +
+            '" alt="" class="h-4 w-4 shrink-0">' +
+            '<span class="text-xs text-cocoa/60"><b class="font-display text-sm font-bold text-cocoa">' +
             esc(w.calories) +
-            " &middot; " +
+            "</b> Calories Burned</span>" +
+            "</div>" +
+            '<div class="mt-1 flex items-center gap-1.5">' +
+            clockIcon +
+            '<span class="text-xs text-cocoa/60"><b class="font-display text-sm font-bold text-cocoa">' +
             esc(w.time) +
-            "</p></article>"
+            "</b> Active Time</span>" +
+            "</div>" +
+            "</div></div>"
           );
         })
         .join("");
@@ -496,7 +550,7 @@
 
   /* ============ WELLNESS (jadwal + progress) ============ */
   function wellnessDone() {
-    return window.nvGet("wellness", {}); // { s1: true, ... }
+    return window.nvGet("wellness", D.wellnessDoneDefault); // { s1: true, ... }
   }
   function setupWellness() {
     var list = qs("#nv-schedule");
@@ -510,7 +564,7 @@
           .map(function (s) {
             var on = !!done[s.id];
             return (
-              '<li><label class="flex cursor-pointer items-center gap-4 rounded-2xl bg-sky-soft/70 p-4">' +
+              '<li><label class="flex cursor-pointer items-center gap-4 rounded-2xl bg-sky-soft p-4">' +
               '<img src="' +
               img(s.img) +
               '" alt="" class="h-12 w-12 rounded-full bg-white object-cover">' +
@@ -613,7 +667,7 @@
       var q = questions[step];
       root.innerHTML =
         '<div class="mb-6 flex items-center justify-between">' +
-        '<span class="font-display font-bold text-cocoa/50">' +
+        '<span class="font-display font-bold text-cocoa/70">' +
         (step + 1) +
         " / " +
         questions.length +
@@ -740,6 +794,46 @@
         .join("");
     }
 
+    // Sidebar kanan: menampilkan kebalikan dari tab yang aktif di kiri
+    // (tab Komunitas aktif -> sidebar Artikel; tab Artikel aktif -> sidebar Komunitas)
+    var sidebarLabel = qs("#nv-sidebar-label");
+    var sidebarList = qs("#nv-sidebar-list");
+    function paintSidebar(activeTab) {
+      if (!sidebarList) return;
+      var showArticles = activeTab === "komunitas"; // isi sidebar = lawan dari tab aktif
+      if (sidebarLabel) sidebarLabel.textContent = showArticles ? "Artikel" : "Komunitas";
+      var items = showArticles ? D.articles : D.communities;
+      sidebarList.innerHTML = items
+        .map(function (item) {
+          if (showArticles) {
+            return (
+              '<button type="button" data-article="' +
+              item.id +
+              '" class="flex w-full items-center gap-3 rounded-2xl p-2 text-left hover:bg-white/60">' +
+              '<img src="' +
+              img(item.img) +
+              '" alt="" class="h-14 w-14 shrink-0 rounded-2xl object-cover">' +
+              '<span class="font-display font-bold leading-snug text-cocoa">' +
+              esc(item.title) +
+              "</span></button>"
+            );
+          }
+          return (
+            '<div class="flex items-center gap-3 rounded-2xl p-2">' +
+            '<img src="' +
+            img(item.img) +
+            '" alt="" class="h-14 w-14 shrink-0 rounded-2xl object-cover">' +
+            '<span><span class="block font-display font-bold leading-snug text-cocoa">' +
+            esc(item.name) +
+            '</span><span class="block text-xs text-cocoa/60">' +
+            item.members +
+            " anggota</span></span></div>"
+          );
+        })
+        .join("");
+    }
+    paintSidebar("komunitas"); // sesuai tab default yang aktif
+
     if (modal) {
       document.addEventListener("click", function (e) {
         var open = e.target.closest("[data-article]");
@@ -775,6 +869,7 @@
         qsa("[data-komunitas-panel]").forEach(function (p) {
           p.classList.toggle("hidden", p.getAttribute("data-komunitas-panel") !== name);
         });
+        paintSidebar(name);
       });
     });
   }

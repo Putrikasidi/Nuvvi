@@ -19,14 +19,15 @@
       <div class="flex min-h-screen min-w-0 flex-1 flex-col">
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
-        <main class="flex-1 p-3 sm:p-5 lg:p-6">
-          <div class="space-y-5 rounded-card bg-sage p-4 sm:p-6">
+        <main class="flex-1 space-y-5 bg-sage p-4 sm:p-6 lg:p-8">
             <!-- Header -->
-            <div class="relative overflow-hidden rounded-card bg-sky p-6">
-              <h2 class="font-display text-3xl font-extrabold">Wellness</h2>
-              <p class="text-cocoa/70">Your personal assistant</p>
-              <a href="wellness-quiz.html" class="nv-btn nv-btn--primary mt-4">Atur asisten</a>
-              <img src="assets/img/mascot-vivi-crossed.png" alt="" class="pointer-events-none absolute -bottom-2 right-3 w-24 sm:w-32" />
+            <div class="relative rounded-card bg-sky p-6">
+              <div class="max-w-[70%] sm:max-w-[75%]">
+                <h2 class="font-display text-3xl font-extrabold">Wellness</h2>
+                <p class="text-cocoa/70">Your personal assistant</p>
+                <a href="wellness-quiz.html" class="nv-btn nv-btn--primary mt-4">Atur asisten</a>
+              </div>
+              <img src="assets/img/mascot-vivi-crossed.png" alt="" class="pointer-events-none absolute -bottom-2 right-3 w-32 sm:w-44" />
             </div>
 
             <div class="grid gap-5 lg:grid-cols-2">
@@ -37,7 +38,7 @@
                   <button type="button" class="rounded-pill bg-sky px-4 py-1 text-sm font-bold">Kalender</button>
                 </div>
                 <p class="mb-4 text-sm text-cocoa/60">Rabu, 9 September 2026</p>
-                <ul id="nv-schedule" class="space-y-3"></ul>
+                <ul id="nv-schedule" class="max-h-[420px] space-y-3 overflow-y-auto pr-1"></ul>
               </div>
 
               <!-- Progress Harian -->
@@ -46,11 +47,10 @@
                   <h3 class="font-display text-xl font-extrabold">Progress Harian</h3>
                   <span class="text-sm font-bold text-amber-cta">Lihat detail &rsaquo;</span>
                 </div>
-                <div id="nv-progress-rings" class="grid grid-cols-1 gap-4 sm:grid-cols-2"></div>
-                <img src="assets/img/mascot-nuna-hug.png" alt="" class="ml-auto mt-2 w-24" />
+                <div id="nv-progress-rings" class="grid grid-cols-2 grid-rows-3 grid-flow-col gap-4"></div>
+                <img src="assets/img/mascot-nuna-hug.png" alt="" class="ml-auto mt-3 w-40 sm:w-52" />
               </div>
             </div>
-          </div>
         </main>
       </div>
     </div>

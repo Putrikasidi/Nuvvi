@@ -19,26 +19,30 @@
       <div class="flex min-h-screen min-w-0 flex-1 flex-col">
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
-        <main class="flex-1 p-3 sm:p-5 lg:p-6">
-          <div class="space-y-6 rounded-card bg-sage p-4 sm:p-6">
-            <!-- Banner maskot -->
-            <div class="rounded-card bg-sun p-6">
-              <div class="flex flex-wrap items-center justify-center gap-6">
+        <main class="flex-1 space-y-6 p-4 sm:p-6 lg:p-8">
+            <!-- Banner maskot: foto profil ditumpuk di tengah, menggantung sebagian di luar
+                 tepi bawah banner (posisi absolute), persis seperti desain -->
+            <div class="relative overflow-visible rounded-card bg-sun p-6 pb-16 sm:pb-20">
+              <div class="flex flex-wrap items-center justify-between gap-6">
                 <div class="flex items-center gap-3">
-                  <img src="assets/img/mascot-vivi-crossed-lg.png" alt="Maskot Vivi" class="w-20" />
+                  <img src="assets/img/mascot-vivi-crossed-lg.png" alt="Maskot Vivi" class="w-36 sm:w-44" />
                   <p class="max-w-[200px] rounded-2xl bg-white p-3 text-sm shadow-soft-sm">
                     "Good Morning! I'm Vivi, I'll be your little buddy, cheering you on every step of
                     your healthy journey!"
                   </p>
                 </div>
-                <img src="assets/img/mascot-mia-circle.png" alt="Foto profil Mia" class="w-24 rounded-full" />
                 <div class="flex items-center gap-3">
                   <p class="max-w-[200px] rounded-2xl bg-white p-3 text-sm shadow-soft-sm">
                     "Haii, I'm Nuna. I'll be here to help you along the way."
                   </p>
-                  <img src="assets/img/mascot-nuna-wave.png" alt="Maskot Nuna" class="w-20" />
+                  <img src="assets/img/mascot-nuna-wave.png" alt="Maskot Nuna" class="w-36 sm:w-44" />
                 </div>
               </div>
+              <img
+                src="assets/img/mascot-mia-circle.png"
+                alt="Foto profil Mia"
+                class="absolute bottom-0 left-1/2 w-40 -translate-x-1/2 translate-y-1/3 rounded-full shadow-soft sm:w-48"
+              />
             </div>
 
             <!-- Form -->
@@ -88,7 +92,6 @@
                 </div>
               </form>
             </div>
-          </div>
         </main>
       </div>
     </div>

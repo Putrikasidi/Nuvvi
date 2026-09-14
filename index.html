@@ -39,84 +39,122 @@
           <a href="pricing.html" class="nv-nav-pill">Pricing</a>
           <a href="dashboard.html" class="nv-nav-pill">Try me!</a>
           <a href="login.html" class="nv-nav-pill">Login</a>
-          <a href="register.html" class="nv-btn nv-btn--ghost !bg-sun !px-5 !py-2">Create</a>
         </div>
       </nav>
     </header>
 
     <!-- ===== Hero ===== -->
-    <section class="relative overflow-hidden">
-      <!-- garis "jalan" dekoratif (samar, hanya di layar besar) -->
-      <svg
-        class="pointer-events-none absolute right-0 top-0 hidden h-64 w-[38rem] text-cocoa/25 lg:block"
-        viewBox="0 0 600 260"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="10"
-        stroke-dasharray="1 22"
-        stroke-linecap="round"
-      >
-        <path d="M-20 40 C 140 40, 180 200, 320 200 S 520 60, 640 90" />
-      </svg>
-
-      <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-6 md:px-8 lg:grid-cols-2 lg:pb-24">
+    <section class="relative">
+      <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-6 md:px-8 lg:grid-cols-2 lg:pb-28">
         <div class="nv-reveal">
           <h1 class="font-display text-5xl font-extrabold leading-tight md:text-6xl">
-            Eat Better,<br />Live Healthier
+            Track Your Health,<br />Build Better Habits
           </h1>
           <p class="mt-5 max-w-md text-lg text-cocoa/80">
-            Discover what's in your food, understand how it affects your health, and make better
-            choices every day.
+            From what you eat to how you move, Nuvvi helps you build healthier habits every day.
           </p>
           <a href="dashboard.html" class="nv-btn nv-btn--primary mt-8 !px-12 !py-4 text-lg">Start</a>
         </div>
 
-        <div class="nv-reveal relative">
-          <div class="rounded-[40px] bg-sun/70 p-5 shadow-soft">
-            <img
-              src="assets/img/preview-dashboard.png"
-              alt="Cuplikan dashboard Nuvvi"
-              class="w-full rounded-3xl bg-white shadow-soft"
+        <!-- aspect-[...] memberi tinggi PASTI ke wadah ini, supaya ukuran %
+             pada blob & jalan di bawah bisa dihitung browser dengan benar
+             (tanpa ini, tinggi elemen % akan dianggap 0 karena wadah aslinya
+             tingginya "auto" mengikuti konten). -->
+        <div class="nv-reveal relative aspect-[1221/685]">
+          <!-- Jalan dekoratif atas: masuk dari atas, melengkung turun ke tepi blob.
+               Digambar SEBELUM blob supaya ujungnya "ketutup" blob & terlihat menerus. -->
+          <svg
+            class="pointer-events-none absolute -top-[30%] left-[22%] hidden h-[54%] w-[30%] lg:block"
+            viewBox="0 0 140 138"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M0,0 C45,12 85,42 103,60 C122,80 134,108 137,135" stroke="#2b2015" stroke-width="28" stroke-linecap="round" />
+            <path d="M0,0 C45,12 85,42 103,60 C122,80 134,108 137,135" stroke="#ffffff" stroke-width="4.5" stroke-dasharray="20 17" stroke-linecap="round" />
+          </svg>
+          <!-- Jalan dekoratif bawah: keluar dari tepi blob, melengkung ke kanan bawah -->
+          <svg
+            class="pointer-events-none absolute left-[75%] top-[90%] hidden h-[46%] w-[33%] lg:block"
+            viewBox="0 0 205 208"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M0,0 C8,40 15,70 27,80 C60,105 130,145 202,205" stroke="#2b2015" stroke-width="46" stroke-linecap="round" />
+            <path d="M0,0 C8,40 15,70 27,80 C60,105 130,145 202,205" stroke="#ffffff" stroke-width="7" stroke-dasharray="26 22" stroke-linecap="round" />
+          </svg>
+
+          <!-- Blob dekoratif di belakang mockup: kuning transparan, dipusatkan pada gambar.
+               Digambar SETELAH kedua jalan (jadi menutupi ujungnya, kesan menyambung ke belakang
+               blob) dan SEBELUM gambar dashboard (jadi tertutup gambar di bagian tengah). -->
+          <svg
+            class="pointer-events-none absolute left-[40%] top-1/2 h-[168%] w-[152%] -translate-x-1/2 -translate-y-1/2"
+            viewBox="-100 -100 200 200"
+            aria-hidden="true"
+          >
+            <path
+              d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z"
+              fill="#F7D24E"
+              fill-opacity="0.95"
             />
-          </div>
+            <circle cx="-58" cy="-42" r="9" fill="#FDF8E3" opacity="0.85" />
+            <circle cx="66" cy="58" r="6" fill="#FDF8E3" opacity="0.85" />
+          </svg>
+
           <img
-            src="assets/img/mascot-vivi-phone.png"
-            alt=""
-            class="absolute -bottom-10 -left-4 w-28 md:w-40"
+            src="assets/img/preview-dashboard.png"
+            alt="Cuplikan dashboard Nuvvi"
+            class="absolute inset-0 h-full w-full rounded-3xl bg-white object-cover shadow-soft"
           />
+          <!-- Maskot pendukung: berdiri agak di belakang/samping karakter utama.
+               Hanya tampil di layar desktop (>=lg) - komposisi ini dirancang untuk
+               tata letak 2 kolom seperti PDF; di 1 kolom (tablet/HP) dia bisa
+               tumpang tindih dengan kartu dashboard kalau tetap dipaksakan. -->
           <img
             src="assets/img/mascot-excited.png"
             alt=""
-            class="absolute right-2 -top-10 hidden w-20 sm:block md:w-24"
+            class="absolute bottom-[3%] left-[32%] hidden w-32 lg:block"
+          />
+          <img
+            src="assets/img/mascot-vivi-phone.png"
+            alt=""
+            class="absolute -bottom-[14%] -left-[3%] w-28 md:w-40"
           />
         </div>
       </div>
     </section>
 
-    <!-- ===== Fitur (tab menukar gambar) ===== -->
-    <section class="bg-white/40 py-16">
+    <!-- ===== Fitur (baris tab langsung di bawah navbar, seperti desain) ===== -->
+    <section class="pb-16">
       <div class="mx-auto max-w-7xl px-4 md:px-8">
-        <h2 class="nv-reveal text-center font-display text-3xl font-extrabold md:text-4xl">
-          Kenali fitur Nuvvi
-        </h2>
-        <p class="nv-reveal mx-auto mt-2 max-w-xl text-center text-cocoa/70">
-          Semua yang kamu butuhkan untuk hidup lebih sehat, dalam satu aplikasi.
-        </p>
-
-        <div class="nv-reveal mt-8 flex flex-wrap justify-center gap-2">
-          <button type="button" data-feature-tab="dashboard" class="nv-nav-pill nv-nav-pill--active">Dashboard</button>
-          <button type="button" data-feature-tab="mealplan" class="nv-nav-pill">Meal Plan</button>
-          <button type="button" data-feature-tab="sport" class="nv-nav-pill">Sport Plan</button>
-          <button type="button" data-feature-tab="wellness" class="nv-nav-pill">Wellness</button>
-          <button type="button" data-feature-tab="komunitas" class="nv-nav-pill">Komunitas</button>
+        <div class="nv-reveal flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+          <button type="button" data-feature-tab="dashboard" class="nv-nav-pill nv-nav-pill--active flex items-center gap-2">
+            <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+            Dashboard
+          </button>
+          <button type="button" data-feature-tab="mealplan" class="nv-nav-pill flex items-center gap-2">
+            <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            Meal Plan
+          </button>
+          <button type="button" data-feature-tab="sport" class="nv-nav-pill flex items-center gap-2">
+            <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="5" r="2"/><path d="m8 21 2-5 3-2-1-4-4 2-1 3"/><path d="m13 14 3 2 3-1"/><path d="M10 9 6 8"/></svg>
+            Sport Plan
+          </button>
+          <button type="button" data-feature-tab="wellness" class="nv-nav-pill flex items-center gap-2">
+            <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.5-9C1 8 2.5 4.5 6 4.5c2 0 3.2 1 4 2.2.8-1.2 2-2.2 4-2.2 3.5 0 5 3.5 3.5 6.5C19 15.5 12 20 12 20Z"/></svg>
+            Wellness
+          </button>
+          <button type="button" data-feature-tab="komunitas" class="nv-nav-pill flex items-center gap-2">
+            <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 6a3 3 0 0 1 0 6"/><path d="M18 20a5.5 5.5 0 0 0-3-4.9"/></svg>
+            Komunitas
+          </button>
         </div>
 
-        <div class="nv-reveal mt-8 overflow-hidden rounded-card bg-sun/40 p-4 shadow-soft md:p-8">
+        <div class="nv-reveal mt-6 overflow-hidden rounded-card bg-white p-3 shadow-soft md:p-5">
           <img
             id="nv-feature-image"
             src="assets/img/preview-dashboard.png"
             alt="Tampilan Dashboard"
-            class="mx-auto w-full max-w-4xl rounded-2xl bg-white shadow-soft"
+            class="mx-auto w-full max-w-6xl rounded-2xl bg-white shadow-soft"
           />
         </div>
       </div>
@@ -139,7 +177,7 @@
     </section>
 
     <!-- ===== Footer ===== -->
-    <footer class="border-t border-cocoa/10 py-8 text-center text-sm text-cocoa/60">
+    <footer class="border-t border-cocoa/10 py-8 text-center text-sm text-cocoa/70">
       <div class="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4">
         <div class="flex items-center gap-2">
           <img src="assets/img/logo.png" alt="" class="h-7 w-7 rounded-full" />
