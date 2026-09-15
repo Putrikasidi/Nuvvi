@@ -78,7 +78,7 @@
       '">' +
       icon("edit", "w-5 h-5 shrink-0") +
       "<span>Profile</span></a>" +
-      '    <a href="index.html" class="flex items-center gap-3 rounded-2xl px-4 py-3 font-display font-bold text-cocoa/70 transition hover:bg-sage/10 hover:text-cocoa">' +
+      '    <a id="nv-logout" href="index.html" class="flex items-center gap-3 rounded-2xl px-4 py-3 font-display font-bold text-cocoa/70 transition hover:bg-sage/10 hover:text-cocoa">' +
       icon("logout", "w-5 h-5 shrink-0") +
       "<span>Log out</span></a>" +
       "  </div>" +
@@ -120,12 +120,45 @@
     );
   }
 
+  /* ---------- Banner trial (muncul kalau belum login) ---------- */
+  function bannerHTML() {
+    return (
+      '<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 bg-forest px-4 py-2.5 text-center text-sm font-bold text-white">' +
+      "<span>🎁 Kamu buka trial 7 hari! Login / Daftar buat fitur penuh.</span>" +
+      '<span class="flex gap-2">' +
+      '<a href="login.html" class="rounded-md bg-white/20 px-3 py-1 transition hover:bg-white/30">Login</a>' +
+      '<a href="register.html" class="rounded-md bg-sun px-3 py-1 text-cocoa transition hover:brightness-95">Daftar</a>' +
+      "</span></div>"
+    );
+  }
+
+  /* ---------- Footer (dipakai bersama di semua halaman aplikasi) ---------- */
+  function footerHTML() {
+    return (
+      '<footer class="mt-auto border-t border-cocoa/10 bg-cream py-8 text-center text-sm text-cocoa/70">' +
+      '<div class="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4">' +
+      '<div class="flex items-center gap-2">' +
+      '<img src="assets/img/logo.png" alt="" class="h-7 w-7 rounded-full">' +
+      '<span class="font-display font-bold text-cocoa">Nuvvi</span>' +
+      "</div>" +
+      "<p>&copy; 2026 Nuvvi. Eat better, live healthier.</p>" +
+      "</div></footer>"
+    );
+  }
+
   /* ---------- Pasang ke halaman + interaksi drawer ---------- */
   function mount(active) {
     var sb = document.getElementById("app-sidebar");
     var tb = document.getElementById("app-topbar");
     if (sb) sb.innerHTML = sidebarHTML(active);
-    if (tb) tb.innerHTML = topbarHTML();
+    if (tb) {
+      tb.innerHTML = topbarHTML();
+      // Belum login = mode demo -> tampilkan banner trial di bawah topbar
+      var loggedIn = window.nvGet && window.nvGet("auth", {}).loggedIn;
+      if (!loggedIn) tb.insertAdjacentHTML("afterend", bannerHTML());
+      // Footer dipasang sekali di kolom konten (di bawah <main>)
+      if (tb.parentElement) tb.parentElement.insertAdjacentHTML("beforeend", footerHTML());
+    }
 
     var menuBtn = document.getElementById("nv-menu-btn");
     var backdrop = document.getElementById("app-backdrop");
@@ -140,6 +173,15 @@
     }
     if (menuBtn) menuBtn.addEventListener("click", openNav);
     if (backdrop) backdrop.addEventListener("click", closeNav);
+
+    // Log out: hapus sesi lalu balik ke Home (banner trial muncul lagi)
+    var logoutBtn = document.getElementById("nv-logout");
+    if (logoutBtn)
+      logoutBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (window.nvRemove) window.nvRemove("auth");
+        window.location.href = "index.html";
+      });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") closeNav();
     });
