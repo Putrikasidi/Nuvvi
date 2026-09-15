@@ -290,11 +290,40 @@
 
   /* ============ MEAL PLAN ============ */
   function setupMealPlan() {
-    // Upload + preview
+    // Upload + preview + kamera
     var input = qs("#nv-upload-input");
     var preview = qs("#nv-upload-preview");
     var placeholder = qs("#nv-upload-placeholder");
     var result = qs("#nv-scan-result");
+
+    // Tampilkan foto + hasil "analisa". Dipakai dua-duanya: upload file & foto dari kamera.
+    function showScan(dataUrl) {
+      if (!preview) return;
+      preview.src = dataUrl;
+      preview.classList.remove("hidden");
+      if (placeholder) placeholder.classList.add("hidden");
+      if (!result) return;
+      result.classList.remove("hidden");
+      result.innerHTML =
+        '<p class="font-display text-lg font-extrabold text-cocoa">' +
+        esc(D.scanResult.name) +
+        '</p><p class="mb-3 text-sm text-cocoa/60">Perkiraan ' +
+        esc(D.scanResult.calories) +
+        '</p><div class="grid grid-cols-2 gap-2">' +
+        D.scanResult.macros
+          .map(function (m) {
+            return (
+              '<span class="rounded-2xl bg-leaf/60 px-3 py-2 text-sm"><b class="font-display">' +
+              esc(m.value) +
+              '</b> <span class="text-cocoa/60">' +
+              esc(m.label) +
+              "</span></span>"
+            );
+          })
+          .join("") +
+        "</div>";
+    }
+
     if (input && preview) {
       input.addEventListener("change", function () {
         var file = input.files && input.files[0];
@@ -306,33 +335,66 @@
         }
         var reader = new FileReader();
         reader.onload = function (e) {
-          preview.src = e.target.result;
-          preview.classList.remove("hidden");
-          if (placeholder) placeholder.classList.add("hidden");
-          if (result) {
-            result.classList.remove("hidden");
-            result.innerHTML =
-              '<p class="font-display text-lg font-extrabold text-cocoa">' +
-              esc(D.scanResult.name) +
-              '</p><p class="mb-3 text-sm text-cocoa/60">Perkiraan ' +
-              esc(D.scanResult.calories) +
-              '</p><div class="grid grid-cols-2 gap-2">' +
-              D.scanResult.macros
-                .map(function (m) {
-                  return (
-                    '<span class="rounded-2xl bg-leaf/60 px-3 py-2 text-sm"><b class="font-display">' +
-                    esc(m.value) +
-                    '</b> <span class="text-cocoa/60">' +
-                    esc(m.label) +
-                    "</span></span>"
-                  );
-                })
-                .join("") +
-              "</div>";
-          }
+          showScan(e.target.result);
         };
         reader.readAsDataURL(file);
       });
+    }
+
+    // Kamera langsung: buka kamera perangkat, jepret foto, langsung "di-scan".
+    // (butuh https atau localhost - kalau file HTML dibuka langsung, kamera diblokir browser)
+    var camOpen = qs("#nv-camera-open");
+    var camPanel = qs("#nv-camera-panel");
+    var camVideo = qs("#nv-camera-video");
+    var camShot = qs("#nv-camera-shot");
+    var camClose = qs("#nv-camera-close");
+    var camCanvas = qs("#nv-camera-canvas");
+    var camStream = null;
+
+    function stopCamera() {
+      if (camStream) {
+        camStream.getTracks().forEach(function (t) {
+          t.stop();
+        });
+        camStream = null;
+      }
+      if (camVideo) camVideo.srcObject = null;
+      if (camPanel) camPanel.classList.add("hidden");
+    }
+
+    if (camOpen && camVideo && camPanel) {
+      camOpen.addEventListener("click", function () {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert("Browser ini belum mendukung kamera. Coba upload foto dari galeri ya.");
+          return;
+        }
+        // facingMode "environment" = utamakan kamera belakang di HP
+        navigator.mediaDevices
+          .getUserMedia({ video: { facingMode: "environment" }, audio: false })
+          .then(function (stream) {
+            camStream = stream;
+            camVideo.srcObject = stream;
+            camPanel.classList.remove("hidden");
+          })
+          .catch(function () {
+            alert("Nggak bisa buka kamera. Cek izin kamera di browser, atau upload foto dari galeri ya.");
+          });
+      });
+
+      if (camShot && camCanvas) {
+        camShot.addEventListener("click", function () {
+          var w = camVideo.videoWidth;
+          var h = camVideo.videoHeight;
+          if (!w || !h) return; // video belum siap
+          camCanvas.width = w;
+          camCanvas.height = h;
+          camCanvas.getContext("2d").drawImage(camVideo, 0, 0, w, h);
+          showScan(camCanvas.toDataURL("image/jpeg", 0.9));
+          stopCamera();
+        });
+      }
+
+      if (camClose) camClose.addEventListener("click", stopCamera);
     }
 
     // Your Meal Plan

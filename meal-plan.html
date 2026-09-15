@@ -42,6 +42,26 @@
                     <span class="text-sm">(JPG, PNG, Maks 5 MB)</span>
                   </span>
                 </label>
+
+                <!-- Ambil foto langsung pakai kamera perangkat -->
+                <button type="button" id="nv-camera-open" class="nv-btn nv-btn--primary flex w-full items-center justify-center gap-2">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 4.5 8 7H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-1-2.5H9Z" />
+                    <circle cx="12" cy="13" r="3.5" />
+                  </svg>
+                  Ambil Foto Langsung
+                </button>
+
+                <!-- Panel kamera: video langsung + tombol jepret (muncul saat kamera aktif) -->
+                <div id="nv-camera-panel" class="hidden overflow-hidden rounded-card bg-white p-3 shadow-soft">
+                  <video id="nv-camera-video" playsinline autoplay muted class="w-full rounded-2xl" style="background:#000; aspect-ratio:16/9; object-fit:cover"></video>
+                  <div class="mt-3 flex gap-3">
+                    <button type="button" id="nv-camera-shot" class="nv-btn nv-btn--primary flex-1">Jepret Foto</button>
+                    <button type="button" id="nv-camera-close" class="nv-btn nv-btn--ghost">Batal</button>
+                  </div>
+                </div>
+                <canvas id="nv-camera-canvas" class="hidden"></canvas>
+
                 <div id="nv-scan-result" class="hidden rounded-card bg-leaf/50 p-5"></div>
               </div>
 
