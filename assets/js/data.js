@@ -191,6 +191,35 @@ window.NUVVI_DATA = {
     { group: "air", label: "Minum Air", color: "#E0930E", target: 3 },
   ],
 
+  /* Kondisi kesehatan yang bisa dipilih user di Wellness (boleh pilih lebih dari satu) */
+  healthConditions: [
+    { id: "diabetes", label: "Diabetes" },
+    { id: "hipertensi", label: "Hipertensi" },
+    { id: "asma", label: "Asma" },
+    { id: "kolesterol", label: "Kolesterol tinggi" },
+    { id: "maag", label: "Maag / GERD" },
+    { id: "alergi", label: "Alergi" },
+    { id: "jantung", label: "Jantung" },
+  ],
+
+  /* Pesan pengingat singkat per kondisi. Muncul kalau kondisinya dicentang. */
+  conditionTips: {
+    diabetes: "Jangan lupa cek gula darah & batasi makanan manis ya.",
+    hipertensi: "Kurangi garam dan cek tekanan darah rutin.",
+    asma: "Selalu bawa inhaler, hindari debu & udara dingin.",
+    kolesterol: "Kurangi gorengan, perbanyak serat dan olahraga.",
+    maag: "Makan teratur, hindari makan pedas & telat makan.",
+    alergi: "Hindari pemicu alergimu dan sedia obat alergi.",
+    jantung: "Jaga pola makan, rutin kontrol ke dokter.",
+  },
+
+  /* Daftar obat yang bisa dicentang "sudah diminum hari ini" di Wellness */
+  medications: [
+    { id: "m1", name: "Metformin", dose: "500 mg", time: "Pagi" },
+    { id: "m2", name: "Vitamin D", dose: "1000 IU", time: "Siang" },
+    { id: "m3", name: "Obat maag", dose: "1 tablet", time: "Malam" },
+  ],
+
   /* Pertanyaan Wellness (dijawab satu per satu). Sesuai Desain Canva.pdf hal. 15-22 */
   quizQuestions: [
     {

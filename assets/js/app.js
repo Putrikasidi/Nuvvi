@@ -691,6 +691,96 @@
       });
     }
     paint();
+
+    /* ---- Kondisi kesehatan & obat (bagian baru) ---- */
+    var condWrap = qs("#nv-conditions");
+    var condTip = qs("#nv-condition-tip");
+    var medList = qs("#nv-meds");
+
+    function renderConditions() {
+      if (!condWrap) return;
+      var picked = window.nvGet("conditions", {});
+      condWrap.innerHTML = (D.healthConditions || [])
+        .map(function (c) {
+          var on = !!picked[c.id];
+          // dipilih = hijau penuh, belum = outline abu
+          var cls = on
+            ? "border-forest bg-forest text-white"
+            : "border-cocoa/20 bg-white text-cocoa/80";
+          return (
+            '<button type="button" data-cond="' +
+            c.id +
+            '" class="rounded-md border px-3 py-1.5 text-sm font-bold transition ' +
+            cls +
+            '">' +
+            esc(c.label) +
+            "</button>"
+          );
+        })
+        .join("");
+
+      if (condTip) {
+        var tips = (D.healthConditions || [])
+          .filter(function (c) {
+            return picked[c.id] && D.conditionTips && D.conditionTips[c.id];
+          })
+          .map(function (c) {
+            return D.conditionTips[c.id];
+          });
+        condTip.textContent = tips.length
+          ? "💡 " + tips.join(" ")
+          : "Belum ada kondisi dipilih. Kalau nggak punya, biarkan kosong aja.";
+      }
+    }
+
+    function renderMeds() {
+      if (!medList) return;
+      var taken = window.nvGet("medsTaken", {});
+      medList.innerHTML = (D.medications || [])
+        .map(function (m) {
+          var on = !!taken[m.id];
+          return (
+            '<li><label class="flex cursor-pointer items-center gap-4 rounded-md bg-sky-soft p-3">' +
+            '<span class="flex-1"><span class="block font-display font-extrabold text-cocoa">' +
+            esc(m.name) +
+            '</span><span class="block text-sm text-cocoa/60">' +
+            esc(m.dose) +
+            " · " +
+            esc(m.time) +
+            "</span></span>" +
+            '<input type="checkbox" data-med="' +
+            m.id +
+            '" class="h-6 w-6 accent-forest"' +
+            (on ? " checked" : "") +
+            "></label></li>"
+          );
+        })
+        .join("");
+    }
+
+    if (condWrap) {
+      condWrap.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-cond]");
+        if (!btn) return;
+        var picked = window.nvGet("conditions", {});
+        var id = btn.getAttribute("data-cond");
+        picked[id] = !picked[id];
+        window.nvSet("conditions", picked);
+        renderConditions();
+      });
+    }
+    if (medList) {
+      medList.addEventListener("change", function (e) {
+        var cb = e.target.closest("[data-med]");
+        if (!cb) return;
+        var taken = window.nvGet("medsTaken", {});
+        taken[cb.getAttribute("data-med")] = cb.checked;
+        window.nvSet("medsTaken", taken);
+      });
+    }
+
+    renderConditions();
+    renderMeds();
   }
 
   /* ============ WELLNESS QUIZ (pertanyaan satu per satu) ============ */
