@@ -1,15 +1,15 @@
-# Nuvvi — Eat Better, Live Healthier
+# Nuvvi (Eat Better, Live Healthier)
 
 Website kesehatan **Nuvvi**, dibangun mengikuti desain di `Desain Canva.pdf` untuk **Lomba Desain
 Web PNB ITC#18** (subtema Kesehatan).
 
 Dibuat dengan **HTML biasa + Tailwind CSS + JavaScript murni** (tanpa React/framework JS, tanpa
-backend) — sesuai aturan lomba yang hanya mengizinkan HTML/CSS wajib, Tailwind CSS sebagai
+backend), sesuai aturan lomba yang hanya mengizinkan HTML/CSS wajib, Tailwind CSS sebagai
 framework, dan JavaScript bersifat opsional.
 
 ## Menjalankan di komputer sendiri
 
-Tidak wajib install apa pun — file `assets/css/output.css` sudah jadi (hasil build Tailwind), jadi
+Tidak wajib install apa pun. File `assets/css/output.css` sudah jadi (hasil build Tailwind), jadi
 paling gampang:
 
 **Cara 1 (paling simpel):** dobel-klik `index.html`, terbuka di browser.
@@ -36,13 +36,13 @@ nuvvi/
 ├── meal-plan.html        Meal Plan (upload foto, meal plan harian, rekomendasi makanan)
 ├── sport-plan.html       Sport Plan (weekly activity, activity summary, rekomendasi workout)
 ├── wellness.html         Wellness (jadwal harian + progress harian)
-├── wellness-quiz.html    Wellness — 8 pertanyaan personalisasi, satu per layar
+├── wellness-quiz.html    Wellness, 8 pertanyaan personalisasi, satu per layar
 ├── komunitas.html        Komunitas (artikel & komunitas yang bisa diikuti)
 ├── profile.html          Profile (bisa diedit & disimpan)
 ├── assets/
 │   ├── css/
 │   │   ├── input.css     Sumber Tailwind: @tailwind + class custom (.nv-btn, .nv-card, dst)
-│   │   └── output.css    Hasil build Tailwind — INI yang dipakai semua halaman
+│   │   └── output.css    Hasil build Tailwind (INI yang dipakai semua halaman)
 │   ├── js/
 │   │   ├── storage.js    Pembungkus localStorage (nvGet / nvSet)
 │   │   ├── data.js       Semua data contoh (dummy) di satu tempat
@@ -51,7 +51,7 @@ nuvvi/
 │   └── img/               Aset gambar (logo, maskot, foto makanan, ikon, ilustrasi olahraga)
 ├── tailwind.config.js    Warna, font, radius khas Nuvvi
 ├── package.json          Skrip build CSS (butuh Node.js kalau mau pakai npm)
-└── tools/tailwindcss.exe  Tailwind CLI mandiri (tidak perlu Node.js) — dipakai untuk build CSS
+└── tools/tailwindcss.exe  Tailwind CLI mandiri (tidak perlu Node.js), dipakai untuk build CSS
 ```
 
 ## Kalau ingin mengubah tampilan (edit class Tailwind)
@@ -71,11 +71,11 @@ npm run watch:css        # otomatis build ulang tiap ada perubahan
 
 ## Cara kerja komponen (biar gampang dipahami)
 
-- **Sidebar & Topbar aplikasi** tidak ditulis ulang di 7 halaman — cukup ditulis sekali di
+- **Sidebar & Topbar aplikasi** tidak ditulis ulang di 7 halaman, cukup ditulis sekali di
   `assets/js/layout.js`, lalu setiap halaman aplikasi punya `<aside id="app-sidebar">` dan
   `<header id="app-topbar">` kosong yang diisi otomatis oleh `NuvviLayout.mount(...)`.
 - **Data contoh** (kalori, meal plan, komunitas, pertanyaan wellness, dst) semua ada di
-  `assets/js/data.js` — kalau mau ganti angka/teks, cukup ubah di situ.
+  `assets/js/data.js`, kalau mau ganti angka/teks, cukup ubah di situ.
 - **Class berulang** (tombol, kartu, badge, input, pill menu) dijadikan class custom di
   `assets/css/input.css` bagian `@layer components` (`.nv-btn`, `.nv-card`, `.nv-badge`, dst) biar
   tidak perlu menulis daftar class Tailwind yang sama berkali-kali di HTML.
@@ -99,16 +99,16 @@ npm run watch:css        # otomatis build ulang tiap ada perubahan
 
 Dirancang mengikuti 3 ukuran yang disyaratkan panitia lomba:
 
-- **Desktop** 1440×1024 — tampilan dibuat semirip mungkin dengan `Desain Canva.pdf`.
-- **Tablet** 820×1180 — sidebar aplikasi berpindah jadi menu atas + tombol menu.
-- **Mobile** 390×844 — sidebar jadi laci (drawer) yang muncul dari kiri, semua bagian menumpuk 1
+- **Desktop** 1440×1024: tampilan dibuat semirip mungkin dengan `Desain Canva.pdf`.
+- **Tablet** 820×1180: sidebar aplikasi berpindah jadi menu atas + tombol menu.
+- **Mobile** 390×844: sidebar jadi laci (drawer) yang muncul dari kiri, semua bagian menumpuk 1
   kolom.
 
 ## Menyiapkan berkas untuk dikumpulkan (submission lomba)
 
 1. Pastikan `assets/css/output.css` sudah ter-build (lihat bagian di atas).
 2. Kompres folder `nuvvi/` ini menjadi `.zip` (folder `node_modules/` dan `tools/` boleh
-   dikecualikan supaya ukurannya kecil — situs tetap jalan tanpa keduanya karena `output.css`
+   dikecualikan supaya ukurannya kecil, situs tetap jalan tanpa keduanya karena `output.css`
    sudah jadi dan semua JS-nya JavaScript biasa).
 3. Ikuti format nama file sesuai juklak lomba (`[NamaPeserta]_Website.zip`, dsb).
 

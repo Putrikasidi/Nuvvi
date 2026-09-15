@@ -95,9 +95,9 @@ window.NUVVI_DATA = {
 
   /* "Recommended For You" di halaman Meal Plan */
   recommendedMeals: [
-    { name: "Yogurt", img: "food-yogurt.png", desc: "A light snack with protein, probiotics, and natural sweetness." },
-    { name: "Egg & Avocado Toast", img: "food-toast.png", desc: "A simple combination of protein, healthy fats, and carbohydrates." },
-    { name: "Oatmeal Banana Bowl", img: "food-oatmeal.png", desc: "A filling breakfast with fiber and carbohydrates for daily energy." },
+    { name: "Yogurt", img: "food-yogurt.png", desc: "Light snack, still gets you some protein and probiotics." },
+    { name: "Egg & Avocado Toast", img: "food-toast.png", desc: "Protein, healthy fats and carbs in one. Pretty filling." },
+    { name: "Oatmeal Banana Bowl", img: "food-oatmeal.png", desc: "Fiber-heavy breakfast that keeps you full for a while." },
   ],
 
   /* Hasil "analisa" dummy setelah upload foto makanan di Meal Plan */
