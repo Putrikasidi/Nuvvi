@@ -840,7 +840,7 @@
             return (
               '<button type="button" data-quiz-opt="' +
               esc(opt) +
-              '" class="rounded-pill px-6 py-3 text-center font-display font-bold transition ' +
+              '" class="rounded-md px-6 py-3 text-center font-display font-bold transition ' +
               (on ? "bg-sky text-cocoa" : "bg-leaf/60 text-cocoa/80 hover:bg-leaf") +
               '">' +
               esc(opt) +
@@ -905,7 +905,7 @@
               " anggota</span></span>" +
               '<button type="button" data-join="' +
               c.id +
-              '" class="rounded-pill px-4 py-2 font-display text-sm font-bold transition ' +
+              '" class="rounded-md px-4 py-2 font-display text-sm font-bold transition ' +
               (on ? "bg-sage-dark text-white" : "bg-good/30 text-[#3f6b23] hover:bg-good/50") +
               '">' +
               (on ? "Tergabung" : "Gabung") +

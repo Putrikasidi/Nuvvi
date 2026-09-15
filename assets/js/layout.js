@@ -99,7 +99,7 @@
       icon("search", "w-5 h-5") +
       "</span>" +
       '    <input id="nv-search" type="text" autocomplete="off" placeholder="Search article"' +
-      '      class="w-full rounded-pill border-0 bg-[#C9BCA9]/60 py-3 pl-12 pr-4 text-cocoa placeholder:text-cocoa/60 focus:outline-none focus:ring-4 focus:ring-forest/15">' +
+      '      class="w-full rounded-md border-0 bg-[#C9BCA9]/60 py-3 pl-12 pr-4 text-cocoa placeholder:text-cocoa/60 focus:outline-none focus:ring-4 focus:ring-forest/15">' +
       '    <div id="nv-search-results" class="absolute left-0 right-0 top-full z-30 mt-2 hidden overflow-hidden rounded-3xl bg-white shadow-soft"></div>' +
       "  </label>" +
       '  <button type="button" aria-label="Notifikasi" class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-cocoa hover:bg-white">' +

@@ -28,13 +28,13 @@ module.exports = {
         high: "#E8837B", // badge "High"
       },
       fontFamily: {
-        display: ['"Baloo 2"', '"Comic Sans MS"', "cursive"], // judul membulat
+        display: ['"Poppins"', '"Segoe UI"', "system-ui", "sans-serif"], // judul lebih tegas
         sans: ["Nunito", '"Segoe UI"', "system-ui", "sans-serif"], // teks biasa
       },
       borderRadius: {
-        card: "28px",
+        card: "12px",
         pill: "9999px",
-        btn: "18px", // sudut tombol utama (Start, Login, dst) - membulat tapi tidak sampai pill
+        btn: "4px", // sudut tombol - dibikin lebih kotak biar tampilannya tegas
       },
       boxShadow: {
         soft: "0 10px 30px rgba(74, 42, 22, 0.10)",
