@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Artikel | Nuvvi</title>
+    <link rel="icon" href="assets/img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/output.css" />
+  </head>
+  <body class="bg-cream font-sans text-cocoa" data-page="blog">
+    <div class="lg:flex lg:h-screen lg:overflow-hidden">
+      <aside id="app-sidebar"></aside>
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col lg:h-screen lg:min-h-0 lg:overflow-y-auto">
+        <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
+
+        <main class="flex-1 bg-sage p-4 sm:p-6 lg:p-8">
+          <div class="mx-auto max-w-3xl">
+            <a href="komunitas.html" class="mb-4 inline-flex items-center gap-1.5 font-display font-semibold text-cocoa/70 transition hover:text-cocoa">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
+              Kembali
+            </a>
+            <div id="nv-blog"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="app-backdrop" class="fixed inset-0 z-40 hidden bg-black/30 lg:hidden"></div>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
