@@ -15,8 +15,8 @@
   </head>
   <body class="bg-leaf font-sans text-cocoa" data-page="pricing">
     <header class="relative z-20">
-      <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 md:px-8">
-        <a href="index.html" class="flex items-center gap-2">
+      <nav class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-4 md:px-8">
+        <a href="index.html" class="mr-auto flex items-center gap-2">
           <img src="assets/img/logo.png" alt="Logo Nuvvi" class="h-10 w-10 rounded-full object-cover" />
           <span class="font-display text-2xl font-bold">Nuvvi</span>
         </a>
@@ -25,19 +25,28 @@
             <path d="M4 7h16M4 12h16M4 17h16" />
           </svg>
         </button>
-        <div data-nav-menu class="hidden w-full flex-col gap-2 py-2 md:flex md:w-auto md:flex-row md:items-center md:gap-1 md:py-0">
+        <div class="hidden md:flex md:items-center md:gap-1 md:mr-40 lg:mr-56">
           <a href="index.html" class="nv-nav-pill">Home</a>
           <a href="pricing.html" class="nv-nav-pill nv-nav-pill--active">Pricing</a>
-          <a href="dashboard.html" class="nv-nav-pill">Try me!</a>
-          <a href="login.html" class="nv-nav-pill">Login</a>
         </div>
       </nav>
+      <div class="absolute right-4 top-0 hidden h-full items-center gap-1 md:right-8 md:flex">
+        <a href="dashboard.html" class="nv-nav-pill">Try me!</a>
+        <a href="login.html" class="nv-nav-pill">Login</a>
+      </div>
+      <div data-nav-menu class="absolute inset-x-0 top-full z-30 hidden flex-col gap-2 bg-leaf/95 px-6 pb-4 backdrop-blur md:hidden">
+        <a href="index.html" class="nv-nav-pill">Home</a>
+        <a href="pricing.html" class="nv-nav-pill nv-nav-pill--active">Pricing</a>
+        <a href="dashboard.html" class="nv-nav-pill">Try me!</a>
+        <a href="login.html" class="nv-nav-pill">Login</a>
+      </div>
     </header>
 
     <main class="mx-auto max-w-6xl px-4 py-16 md:px-8">
       <div class="grid gap-8 md:grid-cols-2">
-        <!-- Free Trial -->
+
         <article class="flex h-full flex-col rounded-card bg-white p-8 shadow-soft">
+          <!-- Free Trial -->
           <h2 class="font-display text-3xl font-bold">Free Trial</h2>
           <p class="mt-1 font-display text-2xl font-bold">Rp 0</p>
           <p class="mt-4 text-cocoa">Akses ke semua fitur premium selama 7 hari</p>
@@ -52,8 +61,8 @@
           <a href="dashboard.html" class="nv-btn nv-btn--primary w-full">Coba Gratis 7 Hari</a>
         </article>
 
-        <!-- Premium -->
         <article class="flex h-full flex-col rounded-card bg-white p-8 shadow-soft">
+          <!-- Premium -->
           <h2 class="font-display text-3xl font-bold">Nuvvi Premium</h2>
           <p class="mt-1 font-display text-2xl font-bold">Rp 20.000 <span class="text-lg font-bold text-cocoa/60">/ bulan</span></p>
           <p class="mt-4 text-cocoa">Nikmati semua fitur tanpa batas</p>

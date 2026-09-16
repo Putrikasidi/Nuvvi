@@ -20,9 +20,10 @@
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
         <main class="flex-1 space-y-5 bg-sage p-4 sm:p-6 lg:p-8">
+
             <!-- Banner -->
             <div class="relative min-h-[190px] overflow-hidden rounded-card bg-[#5B4636] p-6 text-white sm:min-h-[240px]">
-              <!-- Bubble hijau dekoratif: beberapa bentuk kecil tersebar, kesan abstrak -->
+
               <svg class="pointer-events-none absolute -left-4 -top-6 h-16 w-16 sm:h-20 sm:w-20" viewBox="-100 -100 200 200" aria-hidden="true">
                 <path d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z" fill="#8FA36B" fill-opacity="0.4" />
               </svg>
@@ -48,10 +49,9 @@
               <img src="assets/img/mascot-vivi-point.png" alt="" class="pointer-events-none absolute bottom-2 right-4 w-40 sm:w-52" />
             </div>
 
-            <!-- Konten utama + sidebar Artikel (selalu tampil), seperti desain -->
             <div class="grid gap-5 lg:grid-cols-3">
               <div class="space-y-5 lg:col-span-2">
-                <!-- Toggle -->
+
                 <div class="flex gap-2">
                   <button type="button" data-komunitas-tab="komunitas" class="rounded-md bg-forest px-5 py-2 font-display font-bold text-white">
                     Group
@@ -61,7 +61,7 @@
                   </button>
                 </div>
 
-                <!-- Panel Komunitas -->
+                <!-- Panel Group -->
                 <div data-komunitas-panel="komunitas">
                   <div class="rounded-card bg-sun-soft/80 p-5">
                     <h3 class="mb-4 text-center font-display text-2xl font-bold">Grup Populer</h3>
@@ -69,9 +69,9 @@
                   </div>
                 </div>
 
-                <!-- Panel Artikel -->
+                <!-- Panel Komunitas -->
                 <div data-komunitas-panel="artikel" class="hidden space-y-5">
-                  <!-- Composer -->
+
                   <div class="nv-card">
                     <div class="flex gap-3">
                       <img src="assets/img/avatar-mia.png" alt="" class="h-11 w-11 shrink-0 rounded-full object-cover" />
@@ -90,14 +90,13 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Feed -->
+
                   <div class="nv-card">
                     <div id="nv-articles"></div>
                   </div>
                 </div>
               </div>
 
-              <!-- Sidebar: saran (ikut tab aktif) -->
               <aside class="rounded-card bg-sun-soft/80 p-5">
                 <h3 id="nv-sidebar-title" class="mb-4 font-display text-lg font-bold text-cocoa">Artikel Populer</h3>
                 <div id="nv-sidebar-list" class="space-y-3"></div>
