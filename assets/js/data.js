@@ -1,10 +1,4 @@
-/*
-  data.js
-  -------
-  Semua data CONTOH (dummy) untuk website Nuvvi dikumpulkan di sini supaya
-  gampang diubah. Belum pakai backend / database.
-  Semua variabel ditaruh di window.NUVVI_DATA.
-*/
+/* data.js — data contoh (dummy) untuk Nuvvi, di window.NUVVI_DATA */
 window.NUVVI_DATA = {
   /* Menu sidebar aplikasi. "icon" merujuk ke nama SVG di layout.js */
   appMenu: [
@@ -44,7 +38,7 @@ window.NUVVI_DATA = {
     { label: "Sad", value: 28.1, color: "#5BB4E5" },
     { label: "Angry", value: 14, color: "#E4574C" },
     { label: "Stressed", value: 10.5, color: "#8FB56B" },
-    { label: "Shied", value: 8.8, color: "#F1A9D0" },
+    { label: "Shocked", value: 8.8, color: "#F1A9D0" },
   ],
 
   /* Daftar "Recent Scans" di Dashboard */
@@ -55,18 +49,17 @@ window.NUVVI_DATA = {
   ],
 
   /* "Your Meal Plan" di halaman Meal Plan */
-  /* Urutan macro mengikuti grid 2x2 di desain: kalori & karbo di baris atas,
-     protein & lemak di baris bawah (ikon dari assets/img/icon-*.png). */
+  /* Meal plan harian */
   mealPlan: [
     {
       meal: "Breakfast",
       name: "Yogurt Bowl",
       img: "food-yogurt.png",
       macros: [
-        { icon: "icon-calories.png", value: "24 g kcal" },
-        { icon: "icon-carbs.png", value: "30 g" },
-        { icon: "icon-protein.png", value: "67 g" },
-        { icon: "icon-fat.png", value: "20 g" },
+        { icon: "icon-calories.png", value: "320 kcal" },
+        { icon: "icon-carbs.png", value: "42 g" },
+        { icon: "icon-protein.png", value: "18 g" },
+        { icon: "icon-fat.png", value: "9 g" },
       ],
     },
     {
@@ -74,10 +67,10 @@ window.NUVVI_DATA = {
       name: "Egg & Avocado Toast",
       img: "food-toast.png",
       macros: [
-        { icon: "icon-calories.png", value: "24 g kcal" },
-        { icon: "icon-carbs.png", value: "30 g" },
-        { icon: "icon-protein.png", value: "67 g" },
-        { icon: "icon-fat.png", value: "20 g" },
+        { icon: "icon-calories.png", value: "450 kcal" },
+        { icon: "icon-carbs.png", value: "38 g" },
+        { icon: "icon-protein.png", value: "22 g" },
+        { icon: "icon-fat.png", value: "24 g" },
       ],
     },
     {
@@ -85,10 +78,10 @@ window.NUVVI_DATA = {
       name: "Oatmeal Banana Bowl",
       img: "food-oatmeal.png",
       macros: [
-        { icon: "icon-calories.png", value: "24 g kcal" },
-        { icon: "icon-carbs.png", value: "30 g" },
-        { icon: "icon-protein.png", value: "67 g" },
-        { icon: "icon-fat.png", value: "20 g" },
+        { icon: "icon-calories.png", value: "380 kcal" },
+        { icon: "icon-carbs.png", value: "60 g" },
+        { icon: "icon-protein.png", value: "12 g" },
+        { icon: "icon-fat.png", value: "8 g" },
       ],
     },
   ],
@@ -147,17 +140,13 @@ window.NUVVI_DATA = {
 
   /* "Recommended Workouts" di Sport Plan */
   recommendedWorkouts: [
-    { name: "Walking", img: "workout-walking.png", calories: "300 kcal", time: "30 min" },
-    { name: "Yoga", img: "workout-yoga.png", calories: "300 kcal", time: "30 min" },
-    { name: "Pilates", img: "workout-pilates.png", calories: "300 kcal", time: "30 min" },
-    { name: "Cardio", img: "workout-cardio.png", calories: "300 kcal", time: "30 min" },
+    { name: "Walking", img: "workout-walking.png", calories: "150 kcal", time: "30 min" },
+    { name: "Yoga", img: "workout-yoga.png", calories: "180 kcal", time: "40 min" },
+    { name: "Pilates", img: "workout-pilates.png", calories: "220 kcal", time: "35 min" },
+    { name: "Cardio", img: "workout-cardio.png", calories: "350 kcal", time: "25 min" },
   ],
 
-  /* "Jadwal Hari Ini" di Wellness. "group" dipakai untuk menghitung Progress Harian */
-  /* Jadwal sehari penuh - 3x makan, 3x minum obat, 3x minum air, 1x olahraga.
-     Jumlahnya sengaja dibuat 3/3/3/1 supaya progress di "Progress Harian" (Makan 2/3,
-     Minum Obat 1/3, dst - sesuai desain) benar-benar dihitung dari checklist ini,
-     bukan angka tetap. Centang/lepas centang di sini langsung mengubah ring progress. */
+  /* Jadwal Hari Ini di Wellness ("group" dipakai untuk hitung progress) */
   wellnessSchedule: [
     { id: "s1", title: "Sarapan", note: "Yogurt", time: "07.00", img: "meal-salad-man.png", group: "makan" },
     { id: "s2", title: "Makan Siang", note: "Nasi & sayur", time: "12.00", img: "food-toast.png", group: "makan" },
@@ -171,9 +160,7 @@ window.NUVVI_DATA = {
     { id: "s10", title: "Olahraga", note: "30 menit - walking", time: "10.00", img: "workout-run.png", group: "olahraga" },
   ],
 
-  /* Berapa banyak item jadwal per kategori yang sudah dicentang, saat pertama kali
-     dibuka (sebelum user mengubah apa pun) - dipilih supaya cocok dengan angka di
-     desain: Makan 2/3, Minum Obat 1/3, Minum Air 2/3, Olahraga 0/1. */
+  /* Centang awal jadwal (sebelum user ubah) */
   wellnessDoneDefault: {
     s1: true, s2: true, s3: false,
     s4: true, s5: false, s6: false,
@@ -181,9 +168,7 @@ window.NUVVI_DATA = {
     s10: false,
   },
 
-  /* Target Progress Harian di Wellness (target = jumlah jadwal per grup di atas). */
-  /* Urutan sesuai PDF: kolom kiri Makan/Minum Obat/Olahraga bertumpuk, kolom kanan Minum Air.
-     Dipasangkan dengan #nv-progress-rings yang pakai grid-flow-col grid-rows-3. */
+  /* Target Progress Harian di Wellness */
   wellnessTargets: [
     { group: "makan", label: "Makan", color: "#6E9A46", target: 3 },
     { group: "obat", label: "Minum Obat", color: "#E4574C", target: 3 },
@@ -220,7 +205,7 @@ window.NUVVI_DATA = {
     { id: "m3", name: "Obat maag", dose: "1 tablet", time: "Malam" },
   ],
 
-  /* Pertanyaan Wellness (dijawab satu per satu). Sesuai Desain Canva.pdf hal. 15-22 */
+  /* Pertanyaan Wellness (satu per layar) */
   quizQuestions: [
     {
       id: "reminder",
@@ -282,35 +267,66 @@ window.NUVVI_DATA = {
     { id: "c6", name: "Hidup Tanpa Gula", members: 270, img: "community-noodle.png" },
   ],
 
-  articles: [
+  /* Blog (dipakai di "Artikel Populer" & halaman blog.html) */
+  blogs: [
     {
       id: "a1",
+      author: "Coach Vivi",
+      handle: "@vivi.coach",
+      avatar: "mascot-mia-circle.png",
+      time: "2 jam",
+      likes: 128,
+      replies: 24,
       title: "Manfaat olahraga untuk kesehatan mental",
       img: "workout-pilates.png",
       body: "Olahraga teratur membantu tubuh melepaskan endorfin yang membuat suasana hati lebih baik, mengurangi stres, dan memperbaiki kualitas tidur. Mulai dari 20 menit jalan kaki setiap hari sudah cukup untuk merasakan manfaatnya.",
     },
     {
       id: "a2",
-      title: "Cara Mengatur Kalori Seharian",
+      author: "Nuvvi",
+      handle: "@nuvvi.id",
+      avatar: "logo.png",
+      time: "5 jam",
+      likes: 96,
+      replies: 12,
+      title: "Cara mengatur kalori seharian",
       img: "food-chicken.png",
       body: "Kenali kebutuhan kalori harianmu, lalu bagi ke dalam sarapan, makan siang, makan malam, dan camilan. Utamakan protein dan serat agar kenyang lebih lama, serta batasi minuman manis.",
     },
     {
       id: "a3",
+      author: "Mia",
+      handle: "@mia.nuvvi",
+      avatar: "avatar-mia.png",
+      time: "1 hari",
+      likes: 210,
+      replies: 41,
       title: "Sarapan sehat untuk pagi yang cerah",
       img: "food-yogurt.png",
       body: "Sarapan bergizi seimbang seperti oatmeal dengan buah atau telur dengan roti gandum memberi energi stabil sampai siang dan membantu konsentrasi saat beraktivitas.",
     },
     {
       id: "a4",
+      author: "Nuvvi Health",
+      handle: "@nuvvi.id",
+      avatar: "logo.png",
+      time: "2 hari",
+      likes: 310,
+      replies: 58,
       title: "6 penyakit berbahaya bagi tubuh",
       img: "workout-cardio.png",
       body: "Pola makan tinggi gula dan garam serta kurang gerak meningkatkan risiko diabetes, hipertensi, penyakit jantung, obesitas, kolesterol tinggi, dan gangguan ginjal. Pemeriksaan rutin membantu deteksi dini.",
     },
   ],
 
-  /* Nilai awal halaman Profile (dipakai kalau belum pernah disimpan).
-     Nama dipakai juga di chip user pada topbar ("GOOD MORNING, MIA!"). */
+  /* Thread di feed Komunitas (postingan singkat, bukan blog) */
+  threads: [
+    { id: "t1", author: "Rani", handle: "@rani.fit", avatar: "mascot-mia-circle.png", time: "1 jam", likes: 12, replies: 3, img: "", body: "Baru selesai lari pagi 5K! Udara pagi masih seger banget 🌿" },
+    { id: "t2", author: "Dimas", handle: "@dimasehat", avatar: "avatar-mia.png", time: "3 jam", likes: 8, replies: 5, img: "food-toast.png", body: "Sarapan hari ini: roti gandum + telur + alpukat. Kenyang sampai siang!" },
+    { id: "t3", author: "Nuna", handle: "@nuna.wellness", avatar: "logo.png", time: "kemarin", likes: 20, replies: 6, img: "", body: "Reminder ya, jangan lupa minum air. Target 8 gelas hari ini 💧" },
+  ],
+
+  /* Nilai awal Profile */
   defaultProfile: {
     name: "Mia",
     username: "mia.nuvvi",
