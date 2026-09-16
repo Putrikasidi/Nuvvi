@@ -1,13 +1,4 @@
-/*
-  app.js
-  ------
-  Satu file untuk menyalakan semua interaksi. Cara kerjanya:
-  1. Baca <body data-page="..."> untuk tahu sedang di halaman apa.
-  2. Untuk halaman aplikasi, panggil NuvviLayout.mount() (pasang sidebar + topbar).
-  3. Jalankan fungsi setup khusus halaman tersebut.
-
-  Semua fungsi ditulis sederhana. Data contoh diambil dari window.NUVVI_DATA (data.js).
-*/
+/* app.js — semua interaksi, dipilih dari <body data-page="..."> */
 (function () {
   var D = window.NUVVI_DATA;
   var APP_PAGES = ["dashboard", "meal-plan", "sport-plan", "wellness", "komunitas", "profile"];
@@ -36,8 +27,8 @@
       NuvviLayout.mount(page);
       setupSearch();
     }
-    if (page === "wellness-quiz" && window.NuvviLayout) {
-      NuvviLayout.mount("wellness");
+    if ((page === "wellness-quiz" || page === "blog") && window.NuvviLayout) {
+      NuvviLayout.mount(page === "blog" ? "komunitas" : "wellness");
       setupSearch();
     }
 
@@ -51,9 +42,14 @@
       wellness: setupWellness,
       "wellness-quiz": setupWellnessQuiz,
       komunitas: setupKomunitas,
+      blog: setupBlog,
       profile: setupProfile,
     };
     if (setups[page]) setups[page]();
+
+    // animasi masuk untuk halaman aplikasi (kartu naik + grafik gerak)
+    var ANIM_PAGES = APP_PAGES.concat(["wellness-quiz", "blog"]);
+    if (ANIM_PAGES.indexOf(page) !== -1) animateApp();
 
     setupRevealOnScroll();
     setupMarketingNav();
@@ -71,11 +67,7 @@
     });
   }
 
-  /* ============ Efek muncul halus saat scroll (halaman Home) ============
-     Prinsip: konten TIDAK PERNAH tersembunyi permanen.
-     - Elemen yang sedang terlihat -> disembunyikan sekejap lalu di-fade-in.
-     - Elemen di bawah layar -> di-fade-in begitu ter-scroll ke tampilan,
-       dan tetap dimunculkan otomatis oleh failsafe walau tak di-scroll. */
+  /* Fade-up saat scroll (halaman Home) */
   function setupRevealOnScroll() {
     var items = qsa(".nv-reveal");
     if (!items.length) return;
@@ -101,23 +93,29 @@
     );
 
     var vh = window.innerHeight;
+    var visibleIndex = 0;
     items.forEach(function (i) {
       var top = i.getBoundingClientRect().top;
       i.classList.add("is-pending");
       if (top < vh) {
-        // sudah terlihat -> animasikan sekarang
+        // muncul bertahap (stagger), maksimal 320ms
+        i.style.transitionDelay = Math.min(visibleIndex * 80, 320) + "ms";
+        visibleIndex++;
+        // dua rAF supaya state awal sempat dilukis, transisi baru jalan
         requestAnimationFrame(function () {
-          reveal(i);
+          requestAnimationFrame(function () {
+            reveal(i);
+          });
         });
       } else {
         io.observe(i);
       }
     });
 
-    // Failsafe cepat: setelah 700 ms semua pasti tampil (aman untuk screenshot).
+    // Failsafe: pastikan semua tampil setelah 900ms
     setTimeout(function () {
       items.forEach(reveal);
-    }, 700);
+    }, 900);
   }
 
   /* ============ Search di topbar (saran artikel) ============ */
@@ -174,16 +172,41 @@
     var tabs = qsa("[data-feature-tab]");
     var image = qs("#nv-feature-image");
     if (!tabs.length || !image) return;
+
+    function activate(key) {
+      var active = null;
+      tabs.forEach(function (t) {
+        var on = t.getAttribute("data-feature-tab") === key;
+        t.classList.toggle("nv-nav-pill--active", on);
+        if (on) active = t;
+      });
+      if (active) {
+        image.src = img("preview-" + key + ".png");
+        image.alt = "Tampilan " + active.textContent.trim();
+      }
+    }
+
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
-        tabs.forEach(function (t) {
-          t.classList.remove("nv-nav-pill--active");
-        });
-        tab.classList.add("nv-nav-pill--active");
-        image.src = img("preview-" + tab.getAttribute("data-feature-tab") + ".png");
-        image.alt = "Tampilan " + tab.textContent.trim();
+        activate(tab.getAttribute("data-feature-tab"));
       });
     });
+
+    // Dari footer (#fitur-<key>): aktifkan tab lalu scroll ke bagian Fitur
+    function goToFitur() {
+      if (location.hash.indexOf("#fitur") !== 0) return;
+      var key = location.hash.slice(6).replace(/^-/, "");
+      if (key) activate(key);
+      var sec = document.getElementById("fitur");
+      if (sec) sec.scrollIntoView({ behavior: "smooth" });
+    }
+    if (location.hash.indexOf("#fitur") === 0) {
+      requestAnimationFrame(goToFitur);
+      // ulangi setelah gambar hero selesai load (biar posisi scroll pas)
+      window.addEventListener("load", goToFitur);
+    }
+    // klik footer di halaman Home yang sama (hash berubah tanpa reload)
+    window.addEventListener("hashchange", goToFitur);
   }
 
   /* ============ LOGIN / REGISTER ============ */
@@ -208,7 +231,25 @@
   }
 
   /* ============ DASHBOARD ============ */
+  function showDemoPopup() {
+    var el = document.createElement("div");
+    el.className = "fixed inset-0 z-[70] flex items-center justify-center bg-black/40 p-4";
+    el.innerHTML =
+      '<div class="w-full max-w-sm rounded-card bg-white p-6 text-center shadow-soft">' +
+      '<img src="assets/img/mascot-nuna-wave.png" alt="" class="mx-auto mb-3 w-24">' +
+      '<h3 class="font-display text-xl font-bold text-cocoa">Halo! 👋</h3>' +
+      '<p class="mt-2 text-cocoa/70">Kamu baru saja memasuki halaman demo - free trial 7 hari.</p>' +
+      '<button type="button" data-demo-close class="nv-btn nv-btn--primary mt-5 w-full">Oke, mengerti</button>' +
+      "</div>";
+    document.body.appendChild(el);
+    el.addEventListener("click", function (e) {
+      if (e.target === el || e.target.closest("[data-demo-close]")) el.remove();
+    });
+  }
+
   function setupDashboard() {
+    showDemoPopup();
+
     // Donut "Daily Reflection"
     var donut = qs("#nv-donut");
     var legend = qs("#nv-donut-legend");
@@ -222,6 +263,23 @@
         })
         .join(", ");
       donut.style.background = "conic-gradient(" + stops + ")";
+      var top = D.dailyReflection.slice().sort(function (a, b) {
+        return b.value - a.value;
+      })[0];
+      donut.innerHTML =
+        '<div class="grid h-24 w-24 place-items-center rounded-full bg-white text-center leading-none">' +
+        '<span data-donut-num class="font-display text-2xl font-bold text-cocoa">0%</span>' +
+        '<span class="mt-1 text-xs text-cocoa/60">' + esc(top.label) + "</span></div>";
+      var dn = qs("[data-donut-num]", donut);
+      if (dn) {
+        var s0 = null;
+        requestAnimationFrame(function count(ts) {
+          if (s0 === null) s0 = ts;
+          var t = Math.min((ts - s0) / 750, 1);
+          dn.textContent = (top.value * (1 - Math.pow(1 - t, 3))).toFixed(1) + "%";
+          if (t < 1) requestAnimationFrame(count);
+        });
+      }
     }
     if (legend) {
       legend.innerHTML = D.dailyReflection
@@ -243,16 +301,18 @@
     // Kartu nutrisi
     var nut = qs("#nv-nutrients");
     if (nut) {
+      var lastOdd = D.nutrientStats.length % 2 === 1;
       nut.innerHTML = D.nutrientStats
-        .map(function (n) {
+        .map(function (n, i) {
+          var span = lastOdd && i === D.nutrientStats.length - 1 ? " sm:col-span-2" : "";
           return (
-            '<div class="nv-card flex items-center gap-4 !p-4">' +
+            '<div class="flex items-center gap-4 rounded-card bg-white p-4 shadow-soft transition hover:-translate-y-0.5' + span + '">' +
             '<span class="grid h-14 w-14 shrink-0 place-items-center rounded-full" style="background:' +
             n.ring +
             '33"><img src="' +
             img(n.icon) +
             '" alt="" class="h-9 w-9 object-contain"></span>' +
-            '<span><span class="block font-display text-lg font-extrabold text-cocoa">' +
+            '<span><span class="block font-display text-lg font-bold text-cocoa">' +
             esc(n.value) +
             '</span><span class="block text-sm text-cocoa/60">' +
             esc(n.label) +
@@ -305,7 +365,7 @@
       if (!result) return;
       result.classList.remove("hidden");
       result.innerHTML =
-        '<p class="font-display text-lg font-extrabold text-cocoa">' +
+        '<p class="font-display text-lg font-bold text-cocoa">' +
         esc(D.scanResult.name) +
         '</p><p class="mb-3 text-sm text-cocoa/60">Perkiraan ' +
         esc(D.scanResult.calories) +
@@ -407,7 +467,7 @@
             '<img src="' +
             img(m.img) +
             '" alt="" class="h-16 w-16 rounded-2xl object-cover">' +
-            '<span class="flex-1"><span class="block font-display font-extrabold text-cocoa">' +
+            '<span class="flex-1"><span class="block font-display font-bold text-cocoa">' +
             esc(m.meal) +
             '</span><span class="block text-sm text-cocoa/60">' +
             esc(m.name) +
@@ -436,11 +496,11 @@
       rec.innerHTML = D.recommendedMeals
         .map(function (r) {
           return (
-            '<article class="w-64 rounded-card bg-leaf/70 p-4">' +
+            '<article class="rounded-2xl bg-leaf/60 p-4">' +
             '<img src="' +
             img(r.img) +
-            '" alt="" class="mb-3 h-32 w-full rounded-2xl object-cover">' +
-            '<h4 class="font-display font-extrabold text-cocoa">' +
+            '" alt="" class="mb-3 h-32 w-full rounded-xl object-cover">' +
+            '<h4 class="font-display font-bold text-cocoa">' +
             esc(r.name) +
             '</h4><p class="text-sm text-cocoa/70">' +
             esc(r.desc) +
@@ -453,18 +513,29 @@
 
   /* ============ SPORT PLAN ============ */
   function setupSportPlan() {
-    // Strip tanggal
+    // Strip tanggal: 7 hari terakhir sampai hari ini
     var dates = qs("#nv-sport-dates");
     if (dates) {
-      dates.innerHTML = D.sportDates
-        .map(function (d, i) {
+      var dayAbbr = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+      var monAbbr = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+      var today = new Date();
+      var last7 = [];
+      for (var k = 6; k >= 0; k--) {
+        var dt = new Date(today);
+        dt.setDate(today.getDate() - k);
+        last7.push({ day: dayAbbr[dt.getDay()], date: dt.getDate() + " " + monAbbr[dt.getMonth()], isToday: k === 0 });
+      }
+      var ON = ["bg-white", "text-cocoa", "shadow-soft-sm"];
+      var OFF = ["bg-white/40", "text-cocoa/70", "hover:bg-white/70"];
+      dates.innerHTML = last7
+        .map(function (d) {
           return (
-            '<button type="button" data-date class="min-w-[68px] rounded-2xl px-3 py-2 text-center font-display transition ' +
-            (i === 2 ? "bg-white text-cocoa shadow-soft-sm" : "bg-white/40 text-cocoa/70 hover:bg-white/70") +
+            '<button type="button" data-date class="min-w-[64px] rounded-2xl px-3 py-2 text-center font-display transition ' +
+            (d.isToday ? ON.join(" ") : OFF.join(" ")) +
             '"><span class="block text-sm font-bold">' +
-            esc(d.day) +
+            d.day +
             '</span><span class="block text-xs">' +
-            esc(d.date) +
+            d.date +
             "</span></button>"
           );
         })
@@ -473,9 +544,11 @@
         var b = e.target.closest("[data-date]");
         if (!b) return;
         qsa("[data-date]", dates).forEach(function (x) {
-          x.className = x.className.replace("bg-white text-cocoa shadow-soft-sm", "bg-white/40 text-cocoa/70 hover:bg-white/70");
+          x.classList.remove.apply(x.classList, ON);
+          x.classList.add.apply(x.classList, OFF);
         });
-        b.className = b.className.replace("bg-white/40 text-cocoa/70 hover:bg-white/70", "bg-white text-cocoa shadow-soft-sm");
+        b.classList.remove.apply(b.classList, OFF);
+        b.classList.add.apply(b.classList, ON);
       });
     }
 
@@ -488,40 +561,57 @@
           return '<span class="leading-none">' + v.toLocaleString("id-ID") + "</span>";
         })
         .join("");
-      var grid =
-        '<div class="pointer-events-none absolute inset-x-10 top-0 h-40">' +
-        [0, 25, 50, 75, 100]
-          .map(function (p) {
-            return '<div class="absolute inset-x-0 border-t border-cocoa/10" style="top:' + p + '%"></div>';
-          })
-          .join("") +
-        "</div>";
+      var gridlines = [0, 25, 50, 75, 100]
+        .map(function (p) {
+          return '<div class="absolute inset-x-0 border-t border-cocoa/10" style="top:' + p + '%"></div>';
+        })
+        .join("");
       var bars = D.weeklyActivity
         .map(function (d, i) {
           var h = Math.round((d.value / D.weeklyActivityMax) * 100);
           return (
             '<button type="button" data-bar="' +
             i +
-            '" class="group relative z-10 flex flex-1 cursor-pointer flex-col items-center gap-2">' +
-            '<span class="pointer-events-none text-[11px] font-bold text-cocoa">' +
-            d.value.toLocaleString("id-ID") +
-            "</span>" +
-            '<div class="flex h-40 w-full items-end justify-center">' +
-            '<div data-bar-fill class="w-7 rounded-t-lg bg-forest transition group-hover:bg-sage-dark" style="height:' +
-            h +
-            '%"></div></div>' +
-            '<span class="text-xs text-cocoa/60">' +
+            '" class="group flex h-full flex-1 cursor-pointer flex-col items-center justify-end" aria-label="' +
             esc(d.day) +
-            "</span></button>"
+            '">' +
+            '<div data-bar-fill class="w-6 rounded-t-md bg-forest transition group-hover:bg-sage-dark sm:w-7" style="height:' +
+            h +
+            '%"></div></button>'
           );
         })
         .join("");
+      // sumbu Y, gridlines, dan batang berbagi satu area plot h-40 (satu origin)
       chart.innerHTML =
-        grid +
-        '<div class="flex w-10 flex-col justify-between pr-1 text-right text-[10px] font-bold text-cocoa/60" style="height:10rem">' +
+        '<div class="flex gap-2">' +
+        '<div class="flex h-40 w-9 flex-col justify-between pr-1 text-right text-[10px] font-bold text-cocoa/50">' +
         axis +
         "</div>" +
-        bars;
+        '<div class="relative h-40 flex-1">' +
+        gridlines +
+        '<div class="absolute inset-0 flex items-end gap-1.5">' +
+        bars +
+        "</div></div></div>" +
+        '<div class="mt-2 flex gap-2"><div class="w-9"></div>' +
+        '<div class="flex flex-1 justify-between gap-1.5 text-center text-xs text-cocoa/60">' +
+        D.weeklyActivity
+          .map(function (d) {
+            return '<span class="flex-1">' + esc(d.day) + "</span>";
+          })
+          .join("") +
+        "</div></div>";
+
+      // Animasi: batang tumbuh dari 0 ke tingginya
+      qsa("[data-bar-fill]", chart).forEach(function (f) {
+        var target = f.style.height;
+        f.style.height = "0%";
+        f.style.transition = "height .8s cubic-bezier(.22,1,.36,1)";
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            f.style.height = target;
+          });
+        });
+      });
 
       // Klik batang -> highlight + tampilkan rincian kalori hari itu (bisa dipakai, bukan cuma dilihat)
       var summaryEl = qs("#nv-weekly-summary");
@@ -548,18 +638,12 @@
     if (sum) {
       var a = D.activitySummary;
       var clockIcon2 =
-        '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="#2b6cb0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>';
+        '<svg class="h-5 w-5 text-cocoa/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>';
       var footIcon =
-        '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="#8a6410" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="7" rx="2.4" ry="3.2"/><path d="M8 12c0 3-2 4-2 7a2 2 0 0 0 2 2c2 0 2-2 4-2s2 2 3 2a2 2 0 0 0 2-2c0-4-3-4-3-8"/></svg>';
+        '<svg class="h-5 w-5 text-cocoa/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="7" rx="2.4" ry="3.2"/><path d="M8 12c0 3-2 4-2 7a2 2 0 0 0 2 2c2 0 2-2 4-2s2 2 3 2a2 2 0 0 0 2-2c0-4-3-4-3-8"/></svg>';
       sum.innerHTML =
-        '<div class="grid h-36 w-36 shrink-0 place-items-center rounded-full" style="background:conic-gradient(#6E9A46 ' +
-        a.percent +
-        "%, #DDE9CE " +
-        a.percent +
-        '%)">' +
-        '<div class="grid h-28 w-28 place-items-center rounded-full bg-white font-display text-2xl font-extrabold text-cocoa">' +
-        a.percent +
-        "%</div></div>" +
+        '<div data-ring class="grid h-36 w-36 shrink-0 place-items-center rounded-full" style="background:conic-gradient(#1E5E1E 0%, #E6E6E6 0%)">' +
+        '<div data-ring-num class="grid h-28 w-28 place-items-center rounded-full bg-white font-display text-2xl font-bold text-cocoa">0%</div></div>' +
         '<ul class="space-y-3 text-sm">' +
         '<li class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-high/30">' +
         '<img src="' + img("icon-calories.png") + '" alt="" class="h-5 w-5"></span>' +
@@ -569,8 +653,10 @@
         '</span><span><b class="block font-display text-base text-cocoa">' + esc(a.activeTime) + "</b><span class='text-cocoa/60'>Active Time</span></span></li>" +
         '<li class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-sun-soft/70">' +
         footIcon +
-        '</span><span><b class="block font-display text-base text-cocoa">' + esc(a.steps) + "</b><span class='text-cocoa/60'>Total steps</span></span></li>" +
+        '</span><span><b class="block font-display text-base text-cocoa">' + esc(a.steps) + "</b><span class='text-cocoa/60'>Total Steps</span></span></li>" +
         "</ul>";
+      var ringEl = qs("[data-ring]", sum);
+      if (ringEl) tweenRing(ringEl, a.percent, "#1E5E1E", "#E6E6E6", qs("[data-ring-num]", sum));
     }
 
     // Recommended workouts
@@ -581,28 +667,24 @@
       wk.innerHTML = D.recommendedWorkouts
         .map(function (w) {
           return (
-            '<div class="flex w-60 items-center gap-3">' +
+            '<div class="rounded-2xl bg-leaf/60 p-4">' +
             '<img src="' +
             img(w.img) +
-            '" alt="" class="h-20 w-20 shrink-0 rounded-2xl object-cover">' +
-            "<div>" +
-            '<h4 class="font-display font-extrabold text-cocoa">' +
+            '" alt="" class="mb-3 h-28 w-full rounded-xl object-cover">' +
+            '<h4 class="font-display font-bold text-cocoa">' +
             esc(w.name) +
             "</h4>" +
-            '<div class="mt-1 flex items-center gap-1.5">' +
-            '<img src="' +
+            '<div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-cocoa/60">' +
+            '<span class="flex items-center gap-1"><img src="' +
             img("icon-calories.png") +
-            '" alt="" class="h-4 w-4 shrink-0">' +
-            '<span class="text-xs text-cocoa/60"><b class="font-display text-sm font-bold text-cocoa">' +
+            '" alt="" class="h-4 w-4 shrink-0"><b class="font-display text-cocoa">' +
             esc(w.calories) +
-            "</b> Calories Burned</span>" +
-            "</div>" +
-            '<div class="mt-1 flex items-center gap-1.5">' +
+            "</b></span>" +
+            '<span class="flex items-center gap-1">' +
             clockIcon +
-            '<span class="text-xs text-cocoa/60"><b class="font-display text-sm font-bold text-cocoa">' +
+            '<b class="font-display text-cocoa">' +
             esc(w.time) +
-            "</b> Active Time</span>" +
-            "</div>" +
+            "</b></span>" +
             "</div></div>"
           );
         })
@@ -618,6 +700,14 @@
     var list = qs("#nv-schedule");
     var rings = qs("#nv-progress-rings");
 
+    var dateEl = qs("#nv-today-date");
+    if (dateEl) {
+      var hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      var bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      var t = new Date();
+      dateEl.textContent = hari[t.getDay()] + ", " + t.getDate() + " " + bulan[t.getMonth()] + " " + t.getFullYear();
+    }
+
     function paint() {
       var done = wellnessDone();
 
@@ -626,11 +716,11 @@
           .map(function (s) {
             var on = !!done[s.id];
             return (
-              '<li><label class="flex cursor-pointer items-center gap-4 rounded-2xl bg-sky-soft p-4">' +
+              '<li><label class="flex cursor-pointer items-center gap-4 rounded-2xl bg-sky-soft p-3">' +
               '<img src="' +
               img(s.img) +
               '" alt="" class="h-12 w-12 rounded-full bg-white object-cover">' +
-              '<span class="flex-1"><span class="block font-display font-extrabold text-cocoa">' +
+              '<span class="flex-1"><span class="block font-display font-bold text-cocoa">' +
               esc(s.title) +
               '</span><span class="block text-sm text-cocoa/60">' +
               esc(s.note) +
@@ -657,14 +747,18 @@
             var pct = Math.min(100, Math.round((count / t.target) * 100));
             return (
               '<div class="flex items-center gap-3">' +
-              '<div class="grid h-16 w-16 shrink-0 place-items-center rounded-full" style="background:conic-gradient(' +
+              '<div data-ring data-pct="' +
+              pct +
+              '" data-color="' +
+              t.color +
+              '" class="grid h-16 w-16 shrink-0 place-items-center rounded-full" style="background:conic-gradient(' +
               t.color +
               " " +
               pct +
               "%, #EAEAEA " +
               pct +
               '%)">' +
-              '<div class="grid h-12 w-12 place-items-center rounded-full bg-white text-xs font-display font-extrabold text-cocoa">' +
+              '<div data-ring-num class="grid h-12 w-12 place-items-center rounded-full bg-white text-xs font-display font-bold text-cocoa">' +
               pct +
               "%</div></div>" +
               '<span><span class="block font-display font-bold text-cocoa">' +
@@ -691,6 +785,13 @@
       });
     }
     paint();
+
+    // Animasikan ring sekali saat halaman dibuka
+    if (rings) {
+      qsa("[data-ring]", rings).forEach(function (r) {
+        tweenRing(r, Number(r.getAttribute("data-pct")), r.getAttribute("data-color"), "#EAEAEA", qs("[data-ring-num]", r));
+      });
+    }
 
     /* ---- Kondisi kesehatan & obat (bagian baru) ---- */
     var condWrap = qs("#nv-conditions");
@@ -740,8 +841,8 @@
         .map(function (m) {
           var on = !!taken[m.id];
           return (
-            '<li><label class="flex cursor-pointer items-center gap-4 rounded-md bg-sky-soft p-3">' +
-            '<span class="flex-1"><span class="block font-display font-extrabold text-cocoa">' +
+            '<li><label class="flex cursor-pointer items-center gap-4 rounded-2xl bg-sky-soft p-3">' +
+            '<span class="flex-1"><span class="block font-display font-bold text-cocoa">' +
             esc(m.name) +
             '</span><span class="block text-sm text-cocoa/60">' +
             esc(m.dose) +
@@ -796,7 +897,7 @@
         root.innerHTML =
           '<div class="text-center">' +
           '<p class="mb-2 text-5xl">✅</p>' +
-          '<h3 class="mb-2 font-display text-2xl font-extrabold text-cocoa">Preferensi kamu tersimpan</h3>' +
+          '<h3 class="mb-2 font-display text-2xl font-bold text-cocoa">Preferensi kamu tersimpan</h3>' +
           '<p class="mb-6 text-cocoa/60">Nuvvi akan menyesuaikan pengingat & rekomendasi untukmu.</p>' +
           '<ul class="mx-auto mb-8 max-w-md space-y-2 text-left">' +
           questions
@@ -828,7 +929,7 @@
           ? '<button type="button" data-quiz-back class="font-display font-bold text-cocoa/60 hover:text-cocoa">&larr; Kembali</button>'
           : "<span></span>") +
         "</div>" +
-        '<h3 class="mb-8 text-center font-display text-2xl font-extrabold leading-snug text-cocoa">' +
+        '<h3 class="mb-8 text-center font-display text-2xl font-bold leading-snug text-cocoa">' +
         q.emoji +
         " " +
         esc(q.text) +
@@ -881,7 +982,6 @@
   function setupKomunitas() {
     var grid = qs("#nv-communities");
     var artList = qs("#nv-articles");
-    var modal = qs("#nv-article-modal");
 
     function joined() {
       return window.nvGet("joinedCommunities", []);
@@ -898,7 +998,7 @@
               '<img src="' +
               img(c.img) +
               '" alt="" class="h-14 w-14 rounded-2xl object-cover">' +
-              '<span class="flex-1"><span class="block font-display font-extrabold text-cocoa">' +
+              '<span class="flex-1"><span class="block font-display font-bold text-cocoa">' +
               esc(c.name) +
               '</span><span class="block text-xs text-cocoa/60">' +
               (c.members + (on ? 1 : 0)) +
@@ -929,82 +1029,172 @@
     }
 
     if (artList) {
-      artList.innerHTML = D.articles
-        .map(function (a) {
-          return (
-            '<button type="button" data-article="' +
-            a.id +
-            '" class="flex w-full items-center gap-3 rounded-2xl p-2 text-left hover:bg-white/60">' +
-            '<img src="' +
-            img(a.img) +
-            '" alt="" class="h-14 w-14 rounded-2xl object-cover">' +
-            '<span class="font-display font-bold text-cocoa">' +
-            esc(a.title) +
-            "</span></button>"
-          );
-        })
-        .join("");
-    }
+      var ACT = {
+        heart:
+          '<path d="M12 20s-7-4.5-9.5-9C1 8 2.5 4.5 6 4.5c2 0 3.2 1 4 2.2.8-1.2 2-2.2 4-2.2 3.5 0 5 3.5 3.5 6.5C19 15.5 12 20 12 20Z"/>',
+        comment: '<path d="M21 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-5.4A8 8 0 1 1 21 11.5Z"/>',
+        repost: '<path d="M4 8V7a3 3 0 0 1 3-3h10l-2.5-2.5M20 16v1a3 3 0 0 1-3 3H7l2.5 2.5"/>',
+        share: '<path d="M12 15V3m0 0 4 4m-4-4-4 4"/><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/>',
+        trash: '<path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/>',
+      };
+      function actIcon(name, filled) {
+        return (
+          '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="' +
+          (filled ? "currentColor" : "none") +
+          '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+          ACT[name] +
+          "</svg>"
+        );
+      }
+      // dataURL (post user) dipakai langsung; selain itu ambil dari folder assets
+      function assetSrc(v) {
+        return v && v.indexOf("data:") === 0 ? v : img(v);
+      }
+      function userPosts() {
+        return window.nvGet("userArticles", []);
+      }
 
-    // Sidebar kanan: menampilkan kebalikan dari tab yang aktif di kiri
-    // (tab Komunitas aktif -> sidebar Artikel; tab Artikel aktif -> sidebar Komunitas)
-    var sidebarLabel = qs("#nv-sidebar-label");
-    var sidebarList = qs("#nv-sidebar-list");
-    function paintSidebar(activeTab) {
-      if (!sidebarList) return;
-      var showArticles = activeTab === "komunitas"; // isi sidebar = lawan dari tab aktif
-      if (sidebarLabel) sidebarLabel.textContent = showArticles ? "Artikel" : "Komunitas";
-      var items = showArticles ? D.articles : D.communities;
-      sidebarList.innerHTML = items
-        .map(function (item) {
-          if (showArticles) {
+      function paintArticles() {
+        var liked = window.nvGet("likedArticles", {});
+        var all = userPosts().concat(D.threads);
+        artList.className = "divide-y divide-cocoa/10";
+        artList.innerHTML = all
+          .map(function (a) {
+            var on = !!liked[a.id];
+            var isUser = String(a.id).charAt(0) === "u";
+            var title = a.title ? '<p class="mt-1 font-display font-semibold text-cocoa">' + esc(a.title) + "</p>" : "";
+            var body = a.body ? '<p class="mt-0.5 whitespace-pre-line text-sm leading-relaxed text-cocoa/80">' + esc(a.body) + "</p>" : "";
+            var media = a.img ? '<img src="' + assetSrc(a.img) + '" alt="" class="mt-3 max-h-64 w-full rounded-2xl object-cover">' : "";
+            var del = isUser
+              ? '<button type="button" data-del-post="' + a.id + '" class="ml-auto text-cocoa/40 transition hover:text-high" aria-label="Hapus">' + actIcon("trash") + "</button>"
+              : "";
             return (
-              '<button type="button" data-article="' +
-              item.id +
-              '" class="flex w-full items-center gap-3 rounded-2xl p-2 text-left hover:bg-white/60">' +
-              '<img src="' +
-              img(item.img) +
-              '" alt="" class="h-14 w-14 shrink-0 rounded-2xl object-cover">' +
-              '<span class="font-display font-bold leading-snug text-cocoa">' +
-              esc(item.title) +
-              "</span></button>"
+              '<article class="flex gap-3 py-4">' +
+              '<img src="' + assetSrc(a.avatar) + '" alt="" class="h-11 w-11 shrink-0 rounded-full bg-white object-cover">' +
+              '<div class="min-w-0 flex-1">' +
+              '<div class="flex flex-wrap items-center gap-x-2 text-sm">' +
+              '<span class="font-display font-bold text-cocoa">' + esc(a.author) + "</span>" +
+              '<span class="text-cocoa/50">' + esc(a.handle) + "</span>" +
+              '<span class="text-cocoa/40">· ' + esc(a.time) + "</span>" +
+              del +
+              "</div>" +
+              title +
+              body +
+              media +
+              '<div class="mt-3 flex items-center gap-6 text-cocoa/55">' +
+              '<button type="button" data-like="' + a.id + '" class="flex items-center gap-1.5 text-sm transition hover:text-high ' + (on ? "text-high" : "") + '">' +
+              actIcon("heart", on) + "<span>" + (a.likes + (on ? 1 : 0)) + "</span></button>" +
+              '<span class="flex items-center gap-1.5 text-sm">' + actIcon("comment") + a.replies + "</span>" +
+              '<span class="flex items-center gap-1.5 text-sm">' + actIcon("repost") + "</span>" +
+              '<span class="flex items-center gap-1.5 text-sm">' + actIcon("share") + "</span>" +
+              "</div></div></article>"
             );
-          }
-          return (
-            '<div class="flex items-center gap-3 rounded-2xl p-2">' +
-            '<img src="' +
-            img(item.img) +
-            '" alt="" class="h-14 w-14 shrink-0 rounded-2xl object-cover">' +
-            '<span><span class="block font-display font-bold leading-snug text-cocoa">' +
-            esc(item.name) +
-            '</span><span class="block text-xs text-cocoa/60">' +
-            item.members +
-            " anggota</span></span></div>"
-          );
-        })
-        .join("");
-    }
-    paintSidebar("komunitas"); // sesuai tab default yang aktif
+          })
+          .join("");
+      }
 
-    if (modal) {
-      document.addEventListener("click", function (e) {
-        var open = e.target.closest("[data-article]");
-        var close = e.target.closest("[data-modal-close]");
-        if (open) {
-          var a = D.articles.filter(function (x) {
-            return x.id === open.getAttribute("data-article");
-          })[0];
-          if (!a) return;
-          qs("[data-modal-title]", modal).textContent = a.title;
-          qs("[data-modal-body]", modal).textContent = a.body;
-          qs("[data-modal-img]", modal).src = img(a.img);
-          modal.classList.remove("hidden");
-          modal.classList.add("flex");
-        } else if (close || e.target === modal) {
-          modal.classList.add("hidden");
-          modal.classList.remove("flex");
+      artList.addEventListener("click", function (e) {
+        var likeBtn = e.target.closest("[data-like]");
+        var delBtn = e.target.closest("[data-del-post]");
+        if (likeBtn) {
+          var id = likeBtn.getAttribute("data-like");
+          var liked = window.nvGet("likedArticles", {});
+          liked[id] = !liked[id];
+          window.nvSet("likedArticles", liked);
+          paintArticles();
+        } else if (delBtn) {
+          var pid = delBtn.getAttribute("data-del-post");
+          window.nvSet(
+            "userArticles",
+            userPosts().filter(function (p) {
+              return p.id !== pid;
+            })
+          );
+          paintArticles();
         }
       });
+
+      // Composer: ketik + foto opsional + kirim
+      var composer = qs("#nv-composer-input");
+      var composerImg = qs("#nv-composer-img");
+      var composerPreview = qs("#nv-composer-preview");
+      var composerSend = qs("#nv-composer-send");
+      var pendingImg = "";
+      if (composerImg) {
+        composerImg.addEventListener("change", function () {
+          var f = composerImg.files && composerImg.files[0];
+          if (!f) return;
+          if (f.size > 4 * 1024 * 1024) {
+            alert("Ukuran foto maksimal 4 MB.");
+            composerImg.value = "";
+            return;
+          }
+          var reader = new FileReader();
+          reader.onload = function (ev) {
+            pendingImg = ev.target.result;
+            if (composerPreview) {
+              composerPreview.src = pendingImg;
+              composerPreview.classList.remove("hidden");
+            }
+          };
+          reader.readAsDataURL(f);
+        });
+      }
+      if (composerSend && composer) {
+        composerSend.addEventListener("click", function () {
+          var text = composer.value.trim();
+          if (!text && !pendingImg) return;
+          var profile = window.nvGet("profile", D.defaultProfile);
+          var posts = userPosts();
+          posts.unshift({
+            id: "u" + Date.now(),
+            author: profile.name || "Mia",
+            handle: "@" + (profile.username || "mia.nuvvi"),
+            avatar: "avatar-mia.png",
+            time: "Baru saja",
+            likes: 0,
+            replies: 0,
+            title: "",
+            img: pendingImg || "",
+            body: text,
+          });
+          window.nvSet("userArticles", posts);
+          composer.value = "";
+          pendingImg = "";
+          if (composerImg) composerImg.value = "";
+          if (composerPreview) {
+            composerPreview.src = "";
+            composerPreview.classList.add("hidden");
+          }
+          paintArticles();
+        });
+      }
+
+      paintArticles();
+    }
+
+    // Sidebar kanan: selalu "Artikel Populer" (blog, beda dari feed) untuk kedua tab
+    var sidebarList = qs("#nv-sidebar-list");
+    var sidebarTitle = qs("#nv-sidebar-title");
+    if (sidebarList) {
+      if (sidebarTitle) sidebarTitle.textContent = "Artikel Populer";
+      sidebarList.innerHTML = D.blogs
+        .map(function (a) {
+          return (
+            '<a href="blog.html?id=' +
+            a.id +
+            '" class="flex items-center gap-3 rounded-2xl p-2 transition hover:bg-white/60">' +
+            '<img src="' +
+            img(a.img) +
+            '" alt="" class="h-12 w-12 shrink-0 rounded-2xl object-cover">' +
+            '<span class="min-w-0"><span class="block font-display font-bold leading-snug text-cocoa">' +
+            esc(a.title) +
+            '</span><span class="block text-xs text-cocoa/60">' +
+            esc(a.author) +
+            "</span></span></a>"
+          );
+        })
+        .join("");
     }
 
     // Tab Artikel / Komunitas
@@ -1021,9 +1211,61 @@
         qsa("[data-komunitas-panel]").forEach(function (p) {
           p.classList.toggle("hidden", p.getAttribute("data-komunitas-panel") !== name);
         });
-        paintSidebar(name);
       });
     });
+  }
+
+  /* ============ BLOG (detail artikel) ============ */
+  function setupBlog() {
+    var box = qs("#nv-blog");
+    if (!box) return;
+    var id = new URLSearchParams(location.search).get("id");
+    var a =
+      D.blogs.filter(function (x) {
+        return x.id === id;
+      })[0] || D.blogs[0];
+    if (!a) return;
+    function assetSrc(v) {
+      return v && v.indexOf("data:") === 0 ? v : img(v);
+    }
+    var hero = a.img ? '<img src="' + assetSrc(a.img) + '" alt="" class="mb-6 max-h-80 w-full rounded-card object-cover">' : "";
+    box.innerHTML =
+      '<article class="nv-card mx-auto max-w-3xl">' +
+      (a.title ? '<h1 class="font-display text-3xl font-bold leading-tight text-cocoa">' + esc(a.title) + "</h1>" : "") +
+      '<div class="mt-3 flex items-center gap-3">' +
+      '<img src="' + assetSrc(a.avatar) + '" alt="" class="h-10 w-10 rounded-full bg-white object-cover">' +
+      '<span class="text-sm"><span class="block font-display font-bold text-cocoa">' + esc(a.author) + "</span>" +
+      '<span class="block text-cocoa/50">' + esc(a.handle) + " · " + esc(a.time) + "</span></span></div>" +
+      '<div class="mt-6">' + hero + "</div>" +
+      '<p class="whitespace-pre-line leading-relaxed text-cocoa/80">' + esc(a.body) + "</p>" +
+      "</article>";
+  }
+
+  /* ============ Animasi masuk halaman aplikasi ============ */
+  function animateApp() {
+    var main = qs("main");
+    if (!main) return;
+    var blocks = qsa(":scope > *", main);
+    blocks.forEach(function (el, i) {
+      el.style.animationDelay = Math.min(i * 90, 450) + "ms";
+      el.classList.add("nv-anim");
+    });
+  }
+
+  /* Tween angka + isi ring conic-gradient dari 0 ke target */
+  function tweenRing(el, pct, color, track, numEl) {
+    var start = null;
+    var dur = 750;
+    function step(ts) {
+      if (start === null) start = ts;
+      var t = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      var cur = Math.round(pct * eased);
+      el.style.background = "conic-gradient(" + color + " " + cur + "%, " + track + " " + cur + "%)";
+      if (numEl) numEl.textContent = cur + "%";
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
   }
 
   /* ============ PROFILE ============ */
