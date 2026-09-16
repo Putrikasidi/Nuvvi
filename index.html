@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nuvvi | Eat Better, Live Healthier</title>
+    <title>Nuvvi | Track Your Health, Build Better Habits</title>
     <link rel="icon" href="assets/img/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,12 +14,12 @@
     <link rel="stylesheet" href="assets/css/output.css" />
   </head>
   <body class="bg-leaf font-sans text-cocoa" data-page="home">
-    <!-- ===== Navbar (dipakai juga di pricing / login / register) ===== -->
+    <!-- Navbar -->
     <header class="relative z-20">
       <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 md:px-8">
         <a href="index.html" class="flex items-center gap-2">
           <img src="assets/img/logo.png" alt="Logo Nuvvi" class="h-10 w-10 rounded-full object-cover" />
-          <span class="font-display text-2xl font-extrabold">Nuvvi</span>
+          <span class="font-display text-2xl font-bold">Nuvvi</span>
         </a>
         <button
           type="button"
@@ -43,88 +43,24 @@
       </nav>
     </header>
 
-    <!-- ===== Hero ===== -->
+    <!-- Hero -->
     <section class="relative">
-      <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-6 md:px-8 lg:grid-cols-2 lg:pb-28">
-        <div class="nv-reveal">
-          <h1 class="font-display text-5xl font-extrabold leading-tight md:text-6xl">
+      <div class="relative mx-auto max-w-7xl px-4 pb-12 pt-6 md:px-8 lg:-mt-24 lg:pb-20">
+        <div class="nv-reveal flex max-w-md flex-col justify-center py-8 lg:absolute lg:inset-y-0 lg:left-8 lg:z-10 lg:py-0">
+          <h1 class="font-display text-5xl font-bold leading-tight md:text-6xl">
             Track Your Health,<br />Build Better Habits
           </h1>
           <p class="mt-5 max-w-md text-lg text-cocoa/80">
             Dari makanan sampai olahraga, Nuvvi bantu kamu jaga kebiasaan sehat tiap hari.
           </p>
-          <a href="dashboard.html" class="nv-btn nv-btn--primary mt-8 !px-12 !py-4 text-lg">Start</a>
+          <a href="dashboard.html" class="nv-btn nv-btn--primary mt-8 self-start !px-8 !py-3 text-lg">Start</a>
         </div>
-
-        <!-- aspect-[...] memberi tinggi PASTI ke wadah ini, supaya ukuran %
-             pada blob & jalan di bawah bisa dihitung browser dengan benar
-             (tanpa ini, tinggi elemen % akan dianggap 0 karena wadah aslinya
-             tingginya "auto" mengikuti konten). -->
-        <div class="nv-reveal relative aspect-[1221/685]">
-          <!-- Jalan dekoratif atas: masuk dari atas, melengkung turun ke tepi blob.
-               Digambar SEBELUM blob supaya ujungnya "ketutup" blob & terlihat menerus. -->
-          <svg
-            class="pointer-events-none absolute -top-[30%] left-[22%] hidden h-[54%] w-[30%] lg:block"
-            viewBox="0 0 140 138"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path d="M0,0 C45,12 85,42 103,60 C122,80 134,108 137,135" stroke="#2b2015" stroke-width="28" stroke-linecap="round" />
-            <path d="M0,0 C45,12 85,42 103,60 C122,80 134,108 137,135" stroke="#ffffff" stroke-width="4.5" stroke-dasharray="20 17" stroke-linecap="round" />
-          </svg>
-          <!-- Jalan dekoratif bawah: keluar dari tepi blob, melengkung ke kanan bawah -->
-          <svg
-            class="pointer-events-none absolute left-[75%] top-[90%] hidden h-[46%] w-[33%] lg:block"
-            viewBox="0 0 205 208"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path d="M0,0 C8,40 15,70 27,80 C60,105 130,145 202,205" stroke="#2b2015" stroke-width="46" stroke-linecap="round" />
-            <path d="M0,0 C8,40 15,70 27,80 C60,105 130,145 202,205" stroke="#ffffff" stroke-width="7" stroke-dasharray="26 22" stroke-linecap="round" />
-          </svg>
-
-          <!-- Blob dekoratif di belakang mockup: kuning transparan, dipusatkan pada gambar.
-               Digambar SETELAH kedua jalan (jadi menutupi ujungnya, kesan menyambung ke belakang
-               blob) dan SEBELUM gambar dashboard (jadi tertutup gambar di bagian tengah). -->
-          <svg
-            class="pointer-events-none absolute left-[40%] top-1/2 h-[168%] w-[152%] -translate-x-1/2 -translate-y-1/2"
-            viewBox="-100 -100 200 200"
-            aria-hidden="true"
-          >
-            <path
-              d="M45.3,-58.3C58.4,-50.4,68.5,-35.7,71.7,-19.7C74.9,-3.7,71.2,13.6,63.2,28.4C55.2,43.1,42.9,55.3,28.4,62.1C13.9,68.9,-2.8,70.3,-19.2,66.4C-35.6,62.6,-51.7,53.5,-61.8,39.8C-71.9,26.1,-76,7.8,-73.2,-9.2C-70.4,-26.2,-60.7,-41.9,-47.4,-50.1C-34.1,-58.3,-17.1,-59.1,0.5,-59.7C18,-60.3,36.1,-60.7,45.3,-58.3Z"
-              fill="#F7D24E"
-              fill-opacity="0.95"
-            />
-            <circle cx="-58" cy="-42" r="9" fill="#FDF8E3" opacity="0.85" />
-            <circle cx="66" cy="58" r="6" fill="#FDF8E3" opacity="0.85" />
-          </svg>
-
-          <img
-            src="assets/img/preview-dashboard.png"
-            alt="Cuplikan dashboard Nuvvi"
-            class="absolute inset-0 h-full w-full rounded-3xl bg-white object-cover shadow-soft"
-          />
-          <!-- Maskot pendukung: berdiri agak di belakang/samping karakter utama.
-               Hanya tampil di layar desktop (>=lg) - komposisi ini dirancang untuk
-               tata letak 2 kolom seperti PDF; di 1 kolom (tablet/HP) dia bisa
-               tumpang tindih dengan kartu dashboard kalau tetap dipaksakan. -->
-          <img
-            src="assets/img/mascot-excited.png"
-            alt=""
-            class="absolute bottom-[3%] left-[32%] hidden w-32 lg:block"
-          />
-          <img
-            src="assets/img/mascot-vivi-phone.png"
-            alt=""
-            class="absolute -bottom-[14%] -left-[3%] w-28 md:w-40"
-          />
-        </div>
+        <img src="assets/img/hero-illustration.png?v=2" alt="Ilustrasi aplikasi Nuvvi" width="1366" height="768" class="nv-reveal h-auto w-full" />
       </div>
     </section>
 
-    <!-- ===== Fitur (baris tab langsung di bawah navbar, seperti desain) ===== -->
-    <section class="pb-16">
+    <!-- Fitur -->
+    <section id="fitur" class="scroll-mt-8 pb-16">
       <div class="mx-auto max-w-7xl px-4 md:px-8">
         <div class="nv-reveal flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
           <button type="button" data-feature-tab="dashboard" class="nv-nav-pill nv-nav-pill--active flex items-center gap-2">
@@ -160,11 +96,11 @@
       </div>
     </section>
 
-    <!-- ===== CTA harga ===== -->
+    <!-- CTA harga -->
     <section class="py-16">
       <div class="mx-auto max-w-5xl px-4 md:px-8">
         <div class="nv-reveal rounded-card bg-forest px-6 py-10 text-center text-white shadow-soft md:px-12">
-          <h2 class="font-display text-3xl font-extrabold md:text-4xl">Coba gratis selama 1 minggu</h2>
+          <h2 class="font-display text-3xl font-bold md:text-4xl">Coba gratis selama 1 minggu</h2>
           <p class="mx-auto mt-3 max-w-xl text-white/80">
             Akses semua fitur premium Nuvvi tanpa biaya. Lihat pilihan paketnya di halaman harga.
           </p>
@@ -176,16 +112,8 @@
       </div>
     </section>
 
-    <!-- ===== Footer ===== -->
-    <footer class="border-t border-cocoa/10 py-8 text-center text-sm text-cocoa/70">
-      <div class="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4">
-        <div class="flex items-center gap-2">
-          <img src="assets/img/logo.png" alt="" class="h-7 w-7 rounded-full" />
-          <span class="font-display font-bold text-cocoa">Nuvvi</span>
-        </div>
-        <p>&copy; 2026 Nuvvi. Eat better, live healthier.</p>
-      </div>
-    </footer>
+    <!-- Footer -->
+    <div data-site-footer></div>
 
     <script src="assets/js/storage.js"></script>
     <script src="assets/js/data.js"></script>
