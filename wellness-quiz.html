@@ -14,21 +14,25 @@
     <link rel="stylesheet" href="assets/css/output.css" />
   </head>
   <body class="bg-cream font-sans text-cocoa" data-page="wellness-quiz">
-    <div class="lg:flex">
+    <div class="lg:flex lg:h-screen lg:overflow-hidden">
       <aside id="app-sidebar"></aside>
-      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col lg:h-screen lg:min-h-0 lg:overflow-y-auto">
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
         <main class="flex-1 space-y-5 bg-sage p-4 sm:p-6 lg:p-8">
             <div class="relative rounded-card bg-sky p-6">
               <div class="max-w-[70%] sm:max-w-[75%]">
-                <h2 class="font-display text-3xl font-extrabold">Wellness</h2>
+                <h2 class="font-display text-3xl font-bold">Wellness</h2>
                 <p class="text-cocoa/70">Your personal assistant</p>
               </div>
               <img src="assets/img/mascot-vivi-crossed.png" alt="" class="pointer-events-none absolute -bottom-2 right-3 w-32 sm:w-44" />
             </div>
 
             <div class="mx-auto max-w-3xl">
+              <a href="wellness.html" class="mb-4 inline-flex items-center gap-1.5 font-display font-semibold text-cocoa/70 transition hover:text-cocoa">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
+                Kembali
+              </a>
               <div id="nv-quiz" class="nv-card min-h-[360px] p-6 sm:p-10"></div>
             </div>
         </main>
