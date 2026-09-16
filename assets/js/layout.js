@@ -186,7 +186,8 @@
     if (tb) {
       tb.innerHTML = topbarHTML();
       var loggedIn = window.nvGet && window.nvGet("auth", {}).loggedIn;
-      if (!loggedIn) tb.insertAdjacentHTML("afterend", bannerHTML());
+      // banner di dalam header (sticky) supaya ikut nempel, tidak ikut scroll
+      if (!loggedIn) tb.insertAdjacentHTML("beforeend", bannerHTML());
     }
 
     var menuBtn = document.getElementById("nv-menu-btn");
