@@ -1,13 +1,4 @@
-/*
-  storage.js
-  ----------
-  Pembungkus sederhana untuk localStorage supaya:
-  - semua key diberi awalan "nuvvi:" (tidak bentrok dengan data lain di browser)
-  - otomatis diubah ke/dari JSON
-  - aman kalau localStorage tidak tersedia (mode privat, dll)
-
-  Dipakai di mana saja lewat window.nvGet / window.nvSet.
-*/
+/* storage.js — wrapper localStorage (nvGet/nvSet, prefix "nuvvi:", JSON) */
 (function () {
   var PREFIX = "nuvvi:";
 
