@@ -14,16 +14,16 @@
     <link rel="stylesheet" href="assets/css/output.css" />
   </head>
   <body class="bg-cream font-sans text-cocoa" data-page="wellness">
-    <div class="lg:flex">
+    <div class="lg:flex lg:h-screen lg:overflow-hidden">
       <aside id="app-sidebar"></aside>
-      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col lg:h-screen lg:min-h-0 lg:overflow-y-auto">
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
         <main class="flex-1 space-y-5 bg-sage p-4 sm:p-6 lg:p-8">
             <!-- Header -->
             <div class="relative rounded-card bg-sky p-6">
               <div class="max-w-[70%] sm:max-w-[75%]">
-                <h2 class="font-display text-3xl font-extrabold">Wellness</h2>
+                <h2 class="font-display text-3xl font-bold">Wellness</h2>
                 <p class="text-cocoa/70">Your personal assistant</p>
                 <a href="wellness-quiz.html" class="nv-btn nv-btn--primary mt-4">Atur asisten</a>
               </div>
@@ -32,37 +32,31 @@
 
             <div class="grid gap-5 lg:grid-cols-2">
               <!-- Jadwal Hari Ini -->
-              <div class="nv-card">
-                <div class="mb-1 flex items-center justify-between">
-                  <h3 class="font-display text-xl font-extrabold">Jadwal Hari Ini</h3>
-                  <button type="button" class="rounded-md bg-sky px-4 py-1 text-sm font-bold">Kalender</button>
-                </div>
-                <p class="mb-4 text-sm text-cocoa/60">Rabu, 9 September 2026</p>
-                <ul id="nv-schedule" class="max-h-[420px] space-y-3 overflow-y-auto pr-1"></ul>
+              <div class="nv-card flex flex-col">
+                <h3 class="font-display text-xl font-bold">Jadwal Hari Ini</h3>
+                <p id="nv-today-date" class="mb-4 text-sm text-cocoa/60"></p>
+                <ul id="nv-schedule" class="min-h-0 flex-1 space-y-3 overflow-y-auto pr-1"></ul>
               </div>
 
-              <!-- Progress Harian -->
-              <div class="nv-card">
-                <div class="mb-4 flex items-center justify-between">
-                  <h3 class="font-display text-xl font-extrabold">Progress Harian</h3>
-                  <span class="text-sm font-bold text-amber-cta">Lihat detail &rsaquo;</span>
+              <!-- Progress + Kondisi -->
+              <div class="space-y-5">
+                <div class="nv-card">
+                  <h3 class="mb-4 font-display text-xl font-bold">Progress Harian</h3>
+                  <div id="nv-progress-rings" class="grid grid-cols-1 gap-4 sm:grid-cols-2"></div>
                 </div>
-                <div id="nv-progress-rings" class="grid grid-cols-2 grid-rows-3 grid-flow-col gap-4"></div>
-                <img src="assets/img/mascot-nuna-hug.png" alt="" class="ml-auto mt-3 w-40 sm:w-52" />
+
+                <div class="nv-card">
+                  <h3 class="font-display text-xl font-bold">Kondisi Kesehatan &amp; Obat</h3>
+                  <p class="mb-4 text-sm text-cocoa/60">Punya kondisi tertentu? Kasih tahu di sini biar pengingatnya pas.</p>
+
+                  <p class="mb-2 text-sm font-bold text-cocoa">Kondisi yang kamu punya</p>
+                  <div id="nv-conditions" class="flex flex-wrap gap-2"></div>
+                  <p id="nv-condition-tip" class="mt-3 rounded-2xl bg-sky-soft/60 px-3 py-2 text-sm text-cocoa/70"></p>
+
+                  <p class="mb-2 mt-6 text-sm font-bold text-cocoa">Obat hari ini</p>
+                  <ul id="nv-meds" class="space-y-3"></ul>
+                </div>
               </div>
-            </div>
-
-            <!-- Kondisi kesehatan & obat -->
-            <div class="nv-card">
-              <h3 class="font-display text-xl font-extrabold">Kondisi Kesehatan &amp; Obat</h3>
-              <p class="mb-4 text-sm text-cocoa/60">Punya kondisi tertentu? Kasih tahu di sini biar pengingatnya pas.</p>
-
-              <p class="mb-2 text-sm font-bold text-cocoa">Kondisi yang kamu punya</p>
-              <div id="nv-conditions" class="flex flex-wrap gap-2"></div>
-              <p id="nv-condition-tip" class="mt-3 text-sm text-cocoa/70"></p>
-
-              <p class="mb-2 mt-6 text-sm font-bold text-cocoa">Obat hari ini</p>
-              <ul id="nv-meds" class="space-y-3"></ul>
             </div>
         </main>
       </div>
