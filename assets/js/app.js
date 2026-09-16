@@ -1,9 +1,7 @@
-/* app.js — semua interaksi, dipilih dari <body data-page="..."> */
 (function () {
   var D = window.NUVVI_DATA;
   var APP_PAGES = ["dashboard", "meal-plan", "sport-plan", "wellness", "komunitas", "profile"];
 
-  /* ============ Pembantu kecil ============ */
   function qs(sel, root) {
     return (root || document).querySelector(sel);
   }
@@ -19,7 +17,6 @@
     return "assets/img/" + name;
   }
 
-  /* ============ Titik masuk ============ */
   document.addEventListener("DOMContentLoaded", function () {
     var page = document.body.getAttribute("data-page") || "";
 
@@ -47,7 +44,6 @@
     };
     if (setups[page]) setups[page]();
 
-    // animasi masuk untuk halaman aplikasi (kartu naik + grafik gerak)
     var ANIM_PAGES = APP_PAGES.concat(["wellness-quiz", "blog"]);
     if (ANIM_PAGES.indexOf(page) !== -1) animateApp();
 
@@ -55,19 +51,17 @@
     setupMarketingNav();
   });
 
-  /* ============ Navbar marketing (menu hamburger di HP) ============ */
   function setupMarketingNav() {
     var btn = qs("[data-nav-toggle]");
     var menu = qs("[data-nav-menu]");
     if (!btn || !menu) return;
     btn.addEventListener("click", function () {
-      // di HP: ganti antara tersembunyi <-> tampil sebagai kolom
+
       menu.classList.toggle("hidden");
       menu.classList.toggle("flex");
     });
   }
 
-  /* Fade-up saat scroll (halaman Home) */
   function setupRevealOnScroll() {
     var items = qsa(".nv-reveal");
     if (!items.length) return;
@@ -98,10 +92,10 @@
       var top = i.getBoundingClientRect().top;
       i.classList.add("is-pending");
       if (top < vh) {
-        // muncul bertahap (stagger), maksimal 320ms
+
         i.style.transitionDelay = Math.min(visibleIndex * 80, 320) + "ms";
         visibleIndex++;
-        // dua rAF supaya state awal sempat dilukis, transisi baru jalan
+
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             reveal(i);
@@ -112,13 +106,11 @@
       }
     });
 
-    // Failsafe: pastikan semua tampil setelah 900ms
     setTimeout(function () {
       items.forEach(reveal);
     }, 900);
   }
 
-  /* ============ Search di topbar (saran artikel) ============ */
   function setupSearch() {
     var input = qs("#nv-search");
     var box = qs("#nv-search-results");
@@ -167,7 +159,6 @@
     });
   }
 
-  /* ============ HOME ============ */
   function setupHome() {
     var tabs = qsa("[data-feature-tab]");
     var image = qs("#nv-feature-image");
@@ -192,7 +183,6 @@
       });
     });
 
-    // Dari footer (#fitur-<key>): aktifkan tab lalu scroll ke bagian Fitur
     function goToFitur() {
       if (location.hash.indexOf("#fitur") !== 0) return;
       var key = location.hash.slice(6).replace(/^-/, "");
@@ -202,14 +192,13 @@
     }
     if (location.hash.indexOf("#fitur") === 0) {
       requestAnimationFrame(goToFitur);
-      // ulangi setelah gambar hero selesai load (biar posisi scroll pas)
+
       window.addEventListener("load", goToFitur);
     }
-    // klik footer di halaman Home yang sama (hash berubah tanpa reload)
+
     window.addEventListener("hashchange", goToFitur);
   }
 
-  /* ============ LOGIN / REGISTER ============ */
   function setupAuthForm() {
     var form = qs("form[data-auth]");
     if (!form) return;
@@ -230,7 +219,6 @@
     });
   }
 
-  /* ============ DASHBOARD ============ */
   function showDemoPopup() {
     var el = document.createElement("div");
     el.className = "fixed inset-0 z-[70] flex items-center justify-center bg-black/40 p-4";
@@ -250,7 +238,6 @@
   function setupDashboard() {
     showDemoPopup();
 
-    // Donut "Daily Reflection"
     var donut = qs("#nv-donut");
     var legend = qs("#nv-donut-legend");
     if (donut) {
@@ -298,7 +285,6 @@
         .join("");
     }
 
-    // Kartu nutrisi
     var nut = qs("#nv-nutrients");
     if (nut) {
       var lastOdd = D.nutrientStats.length % 2 === 1;
@@ -322,7 +308,6 @@
         .join("");
     }
 
-    // Recent Scans
     var rs = qs("#nv-recent-scans");
     if (rs) {
       rs.innerHTML = D.recentScans
@@ -348,15 +333,13 @@
     }
   }
 
-  /* ============ MEAL PLAN ============ */
   function setupMealPlan() {
-    // Upload + preview + kamera
+
     var input = qs("#nv-upload-input");
     var preview = qs("#nv-upload-preview");
     var placeholder = qs("#nv-upload-placeholder");
     var result = qs("#nv-scan-result");
 
-    // Tampilkan foto + hasil "analisa". Dipakai dua-duanya: upload file & foto dari kamera.
     function showScan(dataUrl) {
       if (!preview) return;
       preview.src = dataUrl;
@@ -401,8 +384,6 @@
       });
     }
 
-    // Kamera langsung: buka kamera perangkat, jepret foto, langsung "di-scan".
-    // (butuh https atau localhost - kalau file HTML dibuka langsung, kamera diblokir browser)
     var camOpen = qs("#nv-camera-open");
     var camPanel = qs("#nv-camera-panel");
     var camVideo = qs("#nv-camera-video");
@@ -428,7 +409,7 @@
           alert("Browser ini belum mendukung kamera. Coba upload foto dari galeri ya.");
           return;
         }
-        // facingMode "environment" = utamakan kamera belakang di HP
+
         navigator.mediaDevices
           .getUserMedia({ video: { facingMode: "environment" }, audio: false })
           .then(function (stream) {
@@ -445,7 +426,7 @@
         camShot.addEventListener("click", function () {
           var w = camVideo.videoWidth;
           var h = camVideo.videoHeight;
-          if (!w || !h) return; // video belum siap
+          if (!w || !h) return;
           camCanvas.width = w;
           camCanvas.height = h;
           camCanvas.getContext("2d").drawImage(camVideo, 0, 0, w, h);
@@ -457,7 +438,6 @@
       if (camClose) camClose.addEventListener("click", stopCamera);
     }
 
-    // Your Meal Plan
     var mp = qs("#nv-meal-plan");
     if (mp) {
       mp.innerHTML = D.mealPlan
@@ -490,7 +470,6 @@
         .join("");
     }
 
-    // Recommended For You
     var rec = qs("#nv-recommended-meals");
     if (rec) {
       rec.innerHTML = D.recommendedMeals
@@ -511,9 +490,8 @@
     }
   }
 
-  /* ============ SPORT PLAN ============ */
   function setupSportPlan() {
-    // Strip tanggal: 7 hari terakhir sampai hari ini
+
     var dates = qs("#nv-sport-dates");
     if (dates) {
       var dayAbbr = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
@@ -552,7 +530,6 @@
       });
     }
 
-    // Bar chart Weekly Activity (+ garis bantu & label sumbu)
     var chart = qs("#nv-weekly-chart");
     if (chart) {
       var maxLbl = D.weeklyActivityMax;
@@ -581,7 +558,7 @@
           );
         })
         .join("");
-      // sumbu Y, gridlines, dan batang berbagi satu area plot h-40 (satu origin)
+
       chart.innerHTML =
         '<div class="flex gap-2">' +
         '<div class="flex h-40 w-9 flex-col justify-between pr-1 text-right text-[10px] font-bold text-cocoa/50">' +
@@ -601,7 +578,6 @@
           .join("") +
         "</div></div>";
 
-      // Animasi: batang tumbuh dari 0 ke tingginya
       qsa("[data-bar-fill]", chart).forEach(function (f) {
         var target = f.style.height;
         f.style.height = "0%";
@@ -613,7 +589,6 @@
         });
       });
 
-      // Klik batang -> highlight + tampilkan rincian kalori hari itu (bisa dipakai, bukan cuma dilihat)
       var summaryEl = qs("#nv-weekly-summary");
       var dayNames = { Mon: "Senin", Tue: "Selasa", Wed: "Rabu", Thu: "Kamis", Fri: "Jumat", Sat: "Sabtu", Sun: "Minggu" };
       chart.addEventListener("click", function (e) {
@@ -633,7 +608,6 @@
       });
     }
 
-    // Activity summary ring
     var sum = qs("#nv-activity-summary");
     if (sum) {
       var a = D.activitySummary;
@@ -659,7 +633,6 @@
       if (ringEl) tweenRing(ringEl, a.percent, "#1E5E1E", "#E6E6E6", qs("[data-ring-num]", sum));
     }
 
-    // Recommended workouts
     var wk = qs("#nv-workouts");
     if (wk) {
       var clockIcon =
@@ -692,9 +665,8 @@
     }
   }
 
-  /* ============ WELLNESS (jadwal + progress) ============ */
   function wellnessDone() {
-    return window.nvGet("wellness", D.wellnessDoneDefault); // { s1: true, ... }
+    return window.nvGet("wellness", D.wellnessDoneDefault);
   }
   function setupWellness() {
     var list = qs("#nv-schedule");
@@ -786,14 +758,12 @@
     }
     paint();
 
-    // Animasikan ring sekali saat halaman dibuka
     if (rings) {
       qsa("[data-ring]", rings).forEach(function (r) {
         tweenRing(r, Number(r.getAttribute("data-pct")), r.getAttribute("data-color"), "#EAEAEA", qs("[data-ring-num]", r));
       });
     }
 
-    /* ---- Kondisi kesehatan & obat (bagian baru) ---- */
     var condWrap = qs("#nv-conditions");
     var condTip = qs("#nv-condition-tip");
     var medList = qs("#nv-meds");
@@ -804,7 +774,7 @@
       condWrap.innerHTML = (D.healthConditions || [])
         .map(function (c) {
           var on = !!picked[c.id];
-          // dipilih = hijau penuh, belum = outline abu
+
           var cls = on
             ? "border-forest bg-forest text-white"
             : "border-cocoa/20 bg-white text-cocoa/80";
@@ -884,7 +854,6 @@
     renderMeds();
   }
 
-  /* ============ WELLNESS QUIZ (pertanyaan satu per satu) ============ */
   function setupWellnessQuiz() {
     var root = qs("#nv-quiz");
     if (!root) return;
@@ -978,7 +947,6 @@
     render();
   }
 
-  /* ============ KOMUNITAS ============ */
   function setupKomunitas() {
     var grid = qs("#nv-communities");
     var artList = qs("#nv-articles");
@@ -1046,7 +1014,7 @@
           "</svg>"
         );
       }
-      // dataURL (post user) dipakai langsung; selain itu ambil dari folder assets
+
       function assetSrc(v) {
         return v && v.indexOf("data:") === 0 ? v : img(v);
       }
@@ -1114,7 +1082,6 @@
         }
       });
 
-      // Composer: ketik + foto opsional + kirim
       var composer = qs("#nv-composer-input");
       var composerImg = qs("#nv-composer-img");
       var composerPreview = qs("#nv-composer-preview");
@@ -1173,7 +1140,6 @@
       paintArticles();
     }
 
-    // Sidebar kanan: selalu "Artikel Populer" (blog, beda dari feed) untuk kedua tab
     var sidebarList = qs("#nv-sidebar-list");
     var sidebarTitle = qs("#nv-sidebar-title");
     if (sidebarList) {
@@ -1197,7 +1163,6 @@
         .join("");
     }
 
-    // Tab Artikel / Komunitas
     var tabs = qsa("[data-komunitas-tab]");
     tabs.forEach(function (t) {
       t.addEventListener("click", function () {
@@ -1215,7 +1180,6 @@
     });
   }
 
-  /* ============ BLOG (detail artikel) ============ */
   function setupBlog() {
     var box = qs("#nv-blog");
     if (!box) return;
@@ -1241,7 +1205,6 @@
       "</article>";
   }
 
-  /* ============ Animasi masuk halaman aplikasi ============ */
   function animateApp() {
     var main = qs("main");
     if (!main) return;
@@ -1252,7 +1215,6 @@
     });
   }
 
-  /* Tween angka + isi ring conic-gradient dari 0 ke target */
   function tweenRing(el, pct, color, track, numEl) {
     var start = null;
     var dur = 750;
@@ -1268,7 +1230,6 @@
     requestAnimationFrame(step);
   }
 
-  /* ============ PROFILE ============ */
   function setupProfile() {
     var form = qs("#nv-profile-form");
     if (!form) return;
@@ -1277,7 +1238,6 @@
     var fields = qsa("input", form);
     var profile = window.nvGet("profile", D.defaultProfile);
 
-    // isi nilai
     fields.forEach(function (f) {
       if (profile[f.name] != null) f.value = profile[f.name];
       f.readOnly = true;

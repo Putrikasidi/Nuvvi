@@ -1,4 +1,3 @@
-/* storage.js — wrapper localStorage (nvGet/nvSet, prefix "nuvvi:", JSON) */
 (function () {
   var PREFIX = "nuvvi:";
 

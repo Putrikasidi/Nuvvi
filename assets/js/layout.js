@@ -1,8 +1,6 @@
-/* layout.js — sidebar, topbar, banner & footer aplikasi */
 (function () {
   var D = window.NUVVI_DATA;
 
-  /* Ikon */
   var ICONS = {
     home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
     camera:
@@ -32,9 +30,8 @@
       "</svg>"
     );
   }
-  window.nvIcon = icon; // dipakai halaman lain juga
+  window.nvIcon = icon;
 
-  /* Sidebar */
   function sidebarHTML(active) {
     var items = D.appMenu
       .map(function (m) {
@@ -78,7 +75,6 @@
     );
   }
 
-  /* Topbar */
   function topbarHTML() {
     var profile = window.nvGet ? window.nvGet("profile", D.defaultProfile) : D.defaultProfile;
     return (
@@ -112,7 +108,6 @@
     );
   }
 
-  /* Banner trial (muncul kalau belum login) */
   function bannerHTML() {
     return (
       '<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 bg-forest px-4 py-2.5 text-center text-sm font-bold text-white">' +
@@ -124,7 +119,6 @@
     );
   }
 
-  /* Footer (dipakai bersama di semua halaman) */
   function footerLink(href, label) {
     return '<li><a href="' + href + '" class="transition hover:text-white">' + label + "</a></li>";
   }
@@ -140,7 +134,7 @@
     return (
       '<footer class="mt-auto bg-forest text-cream">' +
       '<div class="mx-auto grid max-w-7xl gap-8 px-6 py-12 sm:grid-cols-2 lg:grid-cols-4">' +
-      // Brand
+
       "<div>" +
       '<div class="flex items-center gap-2">' +
       '<img src="assets/img/logo.png" alt="" class="h-9 w-9 rounded-full">' +
@@ -148,7 +142,7 @@
       "</div>" +
       '<p class="mt-3 max-w-xs text-sm text-cream/70">Aplikasi kesehatan buat bantu kamu makan lebih baik dan hidup lebih sehat tiap hari.</p>' +
       "</div>" +
-      // Fitur
+
       '<div><h4 class="font-display font-bold text-white">Fitur</h4>' +
       '<ul class="mt-3 space-y-2 text-sm text-cream/70">' +
       footerLink("index.html#fitur-dashboard", "Dashboard") +
@@ -157,7 +151,7 @@
       footerLink("index.html#fitur-wellness", "Wellness") +
       footerLink("index.html#fitur-komunitas", "Komunitas") +
       "</ul></div>" +
-      // Nuvvi
+
       '<div><h4 class="font-display font-bold text-white">Nuvvi</h4>' +
       '<ul class="mt-3 space-y-2 text-sm text-cream/70">' +
       footerLink("index.html", "Home") +
@@ -165,7 +159,7 @@
       footerLink("login.html", "Login") +
       footerLink("register.html", "Daftar") +
       "</ul></div>" +
-      // Sosial
+
       '<div><h4 class="font-display font-bold text-white">Ikuti kami</h4>' +
       '<div class="mt-3 flex gap-3">' +
       socialIcon("Instagram", '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>') +
@@ -178,7 +172,6 @@
     );
   }
 
-  /* Pasang layout + drawer HP */
   function mount(active) {
     var sb = document.getElementById("app-sidebar");
     var tb = document.getElementById("app-topbar");
@@ -186,7 +179,7 @@
     if (tb) {
       tb.innerHTML = topbarHTML();
       var loggedIn = window.nvGet && window.nvGet("auth", {}).loggedIn;
-      // banner di dalam header (sticky) supaya ikut nempel, tidak ikut scroll
+
       if (!loggedIn) tb.insertAdjacentHTML("beforeend", bannerHTML());
     }
 
@@ -204,7 +197,6 @@
     if (menuBtn) menuBtn.addEventListener("click", openNav);
     if (backdrop) backdrop.addEventListener("click", closeNav);
 
-    // Log out: hapus sesi lalu balik ke Home (banner trial muncul lagi)
     var logoutBtn = document.getElementById("nv-logout");
     if (logoutBtn)
       logoutBtn.addEventListener("click", function (e) {
@@ -215,14 +207,13 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") closeNav();
     });
-    // Tutup drawer saat salah satu menu diklik (mobile)
+
     if (sb)
       sb.addEventListener("click", function (e) {
         if (e.target.closest("a")) closeNav();
       });
   }
 
-  // Isi footer di halaman marketing/auth (yang pakai placeholder)
   document.addEventListener("DOMContentLoaded", function () {
     var slots = document.querySelectorAll("[data-site-footer]");
     for (var i = 0; i < slots.length; i++) slots[i].innerHTML = footerHTML();

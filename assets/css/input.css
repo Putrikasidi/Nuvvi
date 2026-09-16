@@ -2,14 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-  KOMPONEN SEDERHANA NUVVI
-  ------------------------
-  Kelas-kelas di bawah ini dipakai berulang di banyak halaman supaya markup
-  tetap pendek & konsisten. Ubah di sini, berubah di semua halaman.
-*/
 @layer components {
-  /* ---------- Tombol ---------- */
+
   .nv-btn {
     @apply inline-flex items-center justify-center gap-2 rounded-btn px-4 py-2.5
            font-display font-semibold text-base leading-none transition
@@ -26,12 +20,10 @@
     @apply bg-white/70 text-cocoa hover:bg-white focus-visible:ring-cocoa/20;
   }
 
-  /* Kartu */
   .nv-card {
     @apply rounded-card bg-white p-6 shadow-soft transition hover:-translate-y-0.5;
   }
 
-  /* ---------- Badge status (Recent Scans) ---------- */
   .nv-badge {
     @apply inline-block rounded-md px-3 py-1 text-xs font-bold;
   }
@@ -45,13 +37,11 @@
     @apply bg-high/40 text-[#8f342d];
   }
 
-  /* ---------- Input ---------- */
   .nv-input {
     @apply w-full rounded-lg border-0 bg-taupe/70 px-5 py-4 text-cocoa
            placeholder:text-cocoa/50 focus:outline-none focus:ring-4 focus:ring-forest/20;
   }
 
-  /* ---------- Pill menu (navbar marketing & tab fitur) ---------- */
   .nv-nav-pill {
     @apply rounded-md px-5 py-2 font-display font-semibold text-cocoa/80 transition
            hover:text-cocoa;
@@ -60,8 +50,6 @@
     @apply bg-sun text-cocoa;
   }
 
-  /* ---------- Shell aplikasi (sidebar + drawer HP) ---------- */
-  /* Desktop: sidebar menyatu di kiri. HP: jadi laci yang muncul dari kiri. */
   #app-sidebar {
     @apply fixed inset-y-0 left-0 z-50 w-64 -translate-x-full overflow-y-auto
            bg-cream shadow-soft transition-transform duration-300
@@ -73,7 +61,7 @@
 }
 
 @layer utilities {
-  /* Baris kartu yang bisa digeser ke samping (Recommended For You / Workouts / tanggal) */
+
   .nv-scroll-row {
     @apply flex gap-4 overflow-x-auto pb-2;
     scroll-snap-type: x mandatory;
@@ -82,7 +70,7 @@
     scroll-snap-align: start;
     flex: 0 0 auto;
   }
-  /* Sembunyikan scrollbar tapi tetap bisa scroll */
+
   .nv-no-scrollbar {
     scrollbar-width: none;
   }
@@ -90,10 +78,6 @@
     display: none;
   }
 
-  /* Efek muncul saat di-scroll (dipakai halaman Home).
-     Default: TAMPIL (jadi tanpa JS pun konten tetap terlihat).
-     JS menambah .is-pending hanya pada elemen yang perlu dianimasikan,
-     lalu .is-visible untuk memunculkannya. */
   .nv-reveal {
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
@@ -106,7 +90,6 @@
     transform: none;
   }
 
-  /* Animasi masuk halaman aplikasi (kartu naik halus) */
   @keyframes nvRise {
     from {
       opacity: 0;
