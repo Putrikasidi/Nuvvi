@@ -28,8 +28,8 @@ module.exports = {
         high: "#E8837B", // badge "High"
       },
       fontFamily: {
-        display: ['"Poppins"', '"Segoe UI"', "system-ui", "sans-serif"], // judul lebih tegas
-        sans: ["Nunito", '"Segoe UI"', "system-ui", "sans-serif"], // teks biasa
+        display: ['"Poppins"', '"Segoe UI"', "system-ui", "sans-serif"],
+        sans: ['"Poppins"', '"Segoe UI"', "system-ui", "sans-serif"],
       },
       borderRadius: {
         card: "12px",
