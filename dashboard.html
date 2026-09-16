@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="assets/css/output.css" />
   </head>
   <body class="bg-cream font-sans text-cocoa" data-page="dashboard">
-    <div class="lg:flex">
+    <div class="lg:flex lg:h-screen lg:overflow-hidden">
       <aside id="app-sidebar"></aside>
-      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col lg:h-screen lg:min-h-0 lg:overflow-y-auto">
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
         <main class="flex-1 bg-sage p-4 sm:p-6 lg:p-8">
@@ -24,8 +24,8 @@
               <!-- Kolom kiri -->
               <div class="space-y-5">
                 <!-- Hero -->
-                <div class="relative overflow-hidden rounded-card bg-sun p-6">
-                  <h2 class="font-display text-3xl font-extrabold text-forest">GOOD MORNING, MIA!</h2>
+                <div class="relative rounded-card bg-sun p-6 pr-32">
+                  <h2 class="font-display text-3xl font-bold text-forest">GOOD MORNING, MIA!</h2>
                   <p class="mt-1 text-cocoa/80">Kenali makananmu, jaga kesehatanmu</p>
                   <a href="meal-plan.html" class="nv-btn nv-btn--primary mt-5">Scan Your Food</a>
                   <img
@@ -43,7 +43,7 @@
               <div class="space-y-5">
                 <!-- Daily Reflection -->
                 <div class="nv-card">
-                  <h3 class="font-display text-xl font-extrabold">Daily Reflection</h3>
+                  <h3 class="font-display text-xl font-bold">Daily Reflection</h3>
                   <div class="mt-4 flex flex-wrap items-center gap-6">
                     <div id="nv-donut" class="grid h-40 w-40 shrink-0 place-items-center rounded-full">
                       <div class="h-20 w-20 rounded-full bg-white"></div>
@@ -55,7 +55,7 @@
                 <!-- Recent Scans -->
                 <div class="nv-card">
                   <div class="mb-4 flex items-center justify-between">
-                    <h3 class="font-display text-xl font-extrabold">Recent Scans</h3>
+                    <h3 class="font-display text-xl font-bold">Recent Scans</h3>
                     <a href="meal-plan.html" class="text-sm font-bold text-amber-cta">View All &rsaquo;</a>
                   </div>
                   <ul id="nv-recent-scans" class="space-y-4"></ul>
