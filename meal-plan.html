@@ -14,18 +14,17 @@
     <link rel="stylesheet" href="assets/css/output.css" />
   </head>
   <body class="bg-cream font-sans text-cocoa" data-page="meal-plan">
-    <div class="lg:flex">
+    <div class="lg:flex lg:h-screen lg:overflow-hidden">
       <aside id="app-sidebar"></aside>
-      <div class="flex min-h-screen min-w-0 flex-1 flex-col">
+      <div class="flex min-h-screen min-w-0 flex-1 flex-col lg:h-screen lg:min-h-0 lg:overflow-y-auto">
         <header id="app-topbar" class="sticky top-0 z-20 bg-cream/95 backdrop-blur"></header>
 
-        <main class="flex-1 bg-sun p-4 sm:p-8 lg:p-10">
-          <div>
-            <div class="grid gap-5 lg:grid-cols-2">
+        <main class="flex-1 bg-sage p-4 sm:p-6 lg:p-8">
+          <div class="grid gap-5 lg:grid-cols-2">
               <!-- Upload -->
-              <div class="space-y-4">
+              <div class="space-y-5">
                 <label
-                  class="flex min-h-[260px] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dotted border-cocoa/50 bg-white p-6 text-center shadow-soft"
+                  class="flex min-h-[260px] cursor-pointer flex-col items-center justify-center gap-2 rounded-card border-2 border-dashed border-cocoa/40 bg-white p-6 text-center shadow-soft"
                 >
                   <input id="nv-upload-input" type="file" accept="image/png,image/jpeg" class="sr-only" />
                   <img id="nv-upload-preview" alt="Pratinjau foto makanan" class="hidden max-h-56 rounded-2xl object-contain" />
@@ -38,12 +37,12 @@
                       <circle cx="12" cy="13.5" r="4" fill="#fff" />
                       <circle cx="18" cy="9.3" r="0.9" fill="#fff" />
                     </svg>
-                    <span class="font-display text-lg font-extrabold text-cocoa">Upload Foto Makanan</span>
+                    <span class="font-display text-lg font-bold text-cocoa">Upload Foto Makanan</span>
                     <span class="text-sm">(JPG, PNG, Maks 5 MB)</span>
                   </span>
                 </label>
 
-                <!-- Ambil foto langsung pakai kamera perangkat -->
+                <!-- Kamera -->
                 <button type="button" id="nv-camera-open" class="nv-btn nv-btn--primary flex w-full items-center justify-center gap-2">
                   <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M9 4.5 8 7H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-1-2.5H9Z" />
@@ -52,7 +51,6 @@
                   Ambil Foto Langsung
                 </button>
 
-                <!-- Panel kamera: video langsung + tombol jepret (muncul saat kamera aktif) -->
                 <div id="nv-camera-panel" class="hidden overflow-hidden rounded-card bg-white p-3 shadow-soft">
                   <video id="nv-camera-video" playsinline autoplay muted class="w-full rounded-2xl" style="background:#000; aspect-ratio:16/9; object-fit:cover"></video>
                   <div class="mt-3 flex gap-3">
@@ -66,23 +64,20 @@
               </div>
 
               <!-- Your Meal Plan -->
-              <div class="rounded-card bg-white p-5 shadow-soft">
-                <span class="mb-4 inline-block rounded-md bg-sky px-4 py-1 font-display font-bold">Your Meal Plan</span>
+              <div class="nv-card">
+                <h3 class="mb-4 font-display text-xl font-bold">Your Meal Plan</h3>
                 <ul id="nv-meal-plan" class="space-y-5"></ul>
               </div>
             </div>
 
             <!-- Recommended For You -->
-            <div class="mt-6 rounded-card bg-white p-5 shadow-soft">
-              <div class="mb-4 flex items-center justify-between">
-                <div>
-                  <h3 class="font-display text-xl font-extrabold">Recommended For You</h3>
-                  <p class="text-sm text-cocoa/60">Berdasarkan asupan nutrisimu hari ini</p>
-                </div>
+            <div class="nv-card mt-6">
+              <div class="mb-4">
+                <h3 class="font-display text-xl font-bold">Recommended For You</h3>
+                <p class="text-sm text-cocoa/60">Berdasarkan asupan nutrisimu hari ini</p>
               </div>
-              <div id="nv-recommended-meals" class="nv-scroll-row nv-no-scrollbar"></div>
+              <div id="nv-recommended-meals" class="grid gap-4 sm:grid-cols-3"></div>
             </div>
-          </div>
         </main>
       </div>
     </div>
