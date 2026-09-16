@@ -1,16 +1,8 @@
-/*
-  layout.js
-  ---------
-  Membuat Sidebar + Topbar aplikasi lalu menyuntikkannya ke halaman.
-  Dipanggil di setiap halaman aplikasi dengan:  NuvviLayout.mount("dashboard")
-
-  Kenapa lewat JS? Supaya menu cukup ditulis SEKALI di sini, tidak disalin di
-  7 halaman. Halaman marketing (Home/Pricing/Login/Register) tidak memakai ini.
-*/
+/* layout.js — sidebar, topbar, banner & footer aplikasi */
 (function () {
   var D = window.NUVVI_DATA;
 
-  /* ---------- Kumpulan ikon (SVG kecil, warna mengikuti teks) ---------- */
+  /* Ikon */
   var ICONS = {
     home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
     camera:
@@ -42,7 +34,7 @@
   }
   window.nvIcon = icon; // dipakai halaman lain juga
 
-  /* ---------- HTML Sidebar ---------- */
+  /* Sidebar */
   function sidebarHTML(active) {
     var items = D.appMenu
       .map(function (m) {
@@ -67,7 +59,7 @@
       '<div class="flex h-full flex-col gap-6 p-5">' +
       '  <a href="dashboard.html" class="flex items-center gap-2 px-2">' +
       '    <img src="assets/img/logo.png" alt="Logo Nuvvi" class="w-10 h-10 rounded-full object-cover">' +
-      '    <span class="font-display text-2xl font-extrabold text-cocoa">Nuvvi</span>' +
+      '    <span class="font-display text-2xl font-bold text-cocoa">Nuvvi</span>' +
       "  </a>" +
       '  <nav class="flex flex-col gap-1">' +
       items +
@@ -86,7 +78,7 @@
     );
   }
 
-  /* ---------- HTML Topbar ---------- */
+  /* Topbar */
   function topbarHTML() {
     var profile = window.nvGet ? window.nvGet("profile", D.defaultProfile) : D.defaultProfile;
     return (
@@ -120,11 +112,11 @@
     );
   }
 
-  /* ---------- Banner trial (muncul kalau belum login) ---------- */
+  /* Banner trial (muncul kalau belum login) */
   function bannerHTML() {
     return (
       '<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 bg-forest px-4 py-2.5 text-center text-sm font-bold text-white">' +
-      "<span>🎁 Kamu buka trial 7 hari! Login / Daftar buat fitur penuh.</span>" +
+      "<span>Kamu punya 7 hari trial. Login / Daftar buat fitur penuh.</span>" +
       '<span class="flex gap-2">' +
       '<a href="login.html" class="rounded-md bg-white/20 px-3 py-1 transition hover:bg-white/30">Login</a>' +
       '<a href="register.html" class="rounded-md bg-sun px-3 py-1 text-cocoa transition hover:brightness-95">Daftar</a>' +
@@ -132,32 +124,69 @@
     );
   }
 
-  /* ---------- Footer (dipakai bersama di semua halaman aplikasi) ---------- */
+  /* Footer (dipakai bersama di semua halaman) */
+  function footerLink(href, label) {
+    return '<li><a href="' + href + '" class="transition hover:text-white">' + label + "</a></li>";
+  }
+  function socialIcon(label, paths) {
+    return (
+      '<a href="#" aria-label="' + label + '" class="grid h-9 w-9 place-items-center rounded-md bg-white/10 transition hover:bg-white/20">' +
+      '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      paths +
+      "</svg></a>"
+    );
+  }
   function footerHTML() {
     return (
-      '<footer class="mt-auto border-t border-cocoa/10 bg-cream py-8 text-center text-sm text-cocoa/70">' +
-      '<div class="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4">' +
+      '<footer class="mt-auto bg-forest text-cream">' +
+      '<div class="mx-auto grid max-w-7xl gap-8 px-6 py-12 sm:grid-cols-2 lg:grid-cols-4">' +
+      // Brand
+      "<div>" +
       '<div class="flex items-center gap-2">' +
-      '<img src="assets/img/logo.png" alt="" class="h-7 w-7 rounded-full">' +
-      '<span class="font-display font-bold text-cocoa">Nuvvi</span>' +
+      '<img src="assets/img/logo.png" alt="" class="h-9 w-9 rounded-full">' +
+      '<span class="font-display text-xl font-bold text-white">Nuvvi</span>' +
       "</div>" +
-      "<p>&copy; 2026 Nuvvi. Eat better, live healthier.</p>" +
-      "</div></footer>"
+      '<p class="mt-3 max-w-xs text-sm text-cream/70">Aplikasi kesehatan buat bantu kamu makan lebih baik dan hidup lebih sehat tiap hari.</p>' +
+      "</div>" +
+      // Fitur
+      '<div><h4 class="font-display font-bold text-white">Fitur</h4>' +
+      '<ul class="mt-3 space-y-2 text-sm text-cream/70">' +
+      footerLink("index.html#fitur-dashboard", "Dashboard") +
+      footerLink("index.html#fitur-mealplan", "Meal Plan") +
+      footerLink("index.html#fitur-sport", "Sport Plan") +
+      footerLink("index.html#fitur-wellness", "Wellness") +
+      footerLink("index.html#fitur-komunitas", "Komunitas") +
+      "</ul></div>" +
+      // Nuvvi
+      '<div><h4 class="font-display font-bold text-white">Nuvvi</h4>' +
+      '<ul class="mt-3 space-y-2 text-sm text-cream/70">' +
+      footerLink("index.html", "Home") +
+      footerLink("pricing.html", "Harga") +
+      footerLink("login.html", "Login") +
+      footerLink("register.html", "Daftar") +
+      "</ul></div>" +
+      // Sosial
+      '<div><h4 class="font-display font-bold text-white">Ikuti kami</h4>' +
+      '<div class="mt-3 flex gap-3">' +
+      socialIcon("Instagram", '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>') +
+      socialIcon("Facebook", '<path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"/>') +
+      socialIcon("Email", '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>') +
+      "</div></div>" +
+      "</div>" +
+      '<div class="border-t border-white/15 py-4 text-center text-sm text-cream/60">&copy; 2026 Nuvvi. Eat better, live healthier.</div>' +
+      "</footer>"
     );
   }
 
-  /* ---------- Pasang ke halaman + interaksi drawer ---------- */
+  /* Pasang layout + drawer HP */
   function mount(active) {
     var sb = document.getElementById("app-sidebar");
     var tb = document.getElementById("app-topbar");
     if (sb) sb.innerHTML = sidebarHTML(active);
     if (tb) {
       tb.innerHTML = topbarHTML();
-      // Belum login = mode demo -> tampilkan banner trial di bawah topbar
       var loggedIn = window.nvGet && window.nvGet("auth", {}).loggedIn;
       if (!loggedIn) tb.insertAdjacentHTML("afterend", bannerHTML());
-      // Footer dipasang sekali di kolom konten (di bawah <main>)
-      if (tb.parentElement) tb.parentElement.insertAdjacentHTML("beforeend", footerHTML());
     }
 
     var menuBtn = document.getElementById("nv-menu-btn");
@@ -191,6 +220,12 @@
         if (e.target.closest("a")) closeNav();
       });
   }
+
+  // Isi footer di halaman marketing/auth (yang pakai placeholder)
+  document.addEventListener("DOMContentLoaded", function () {
+    var slots = document.querySelectorAll("[data-site-footer]");
+    for (var i = 0; i < slots.length; i++) slots[i].innerHTML = footerHTML();
+  });
 
   window.NuvviLayout = { mount: mount };
 })();
