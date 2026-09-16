@@ -11,9 +11,10 @@
 @layer components {
   /* ---------- Tombol ---------- */
   .nv-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-btn px-6 py-3
-           font-display font-bold text-base leading-none transition
-           active:scale-[0.98] focus:outline-none focus-visible:ring-4;
+    @apply inline-flex items-center justify-center gap-2 rounded-btn px-4 py-2.5
+           font-display font-semibold text-base leading-none transition
+           hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+           focus:outline-none focus-visible:ring-4;
   }
   .nv-btn--primary {
     @apply bg-forest text-white hover:bg-forest-hover focus-visible:ring-forest/30;
@@ -25,9 +26,9 @@
     @apply bg-white/70 text-cocoa hover:bg-white focus-visible:ring-cocoa/20;
   }
 
-  /* ---------- Kartu ---------- */
+  /* Kartu */
   .nv-card {
-    @apply rounded-card bg-white p-6 shadow-soft;
+    @apply rounded-card bg-white p-6 shadow-soft transition hover:-translate-y-0.5;
   }
 
   /* ---------- Badge status (Recent Scans) ---------- */
@@ -52,7 +53,7 @@
 
   /* ---------- Pill menu (navbar marketing & tab fitur) ---------- */
   .nv-nav-pill {
-    @apply rounded-md px-5 py-2 font-display font-bold text-cocoa/80 transition
+    @apply rounded-md px-5 py-2 font-display font-semibold text-cocoa/80 transition
            hover:text-cocoa;
   }
   .nv-nav-pill--active {
@@ -64,7 +65,7 @@
   #app-sidebar {
     @apply fixed inset-y-0 left-0 z-50 w-64 -translate-x-full overflow-y-auto
            bg-cream shadow-soft transition-transform duration-300
-           lg:static lg:z-auto lg:translate-x-0 lg:shadow-none;
+           lg:static lg:z-auto lg:h-screen lg:shrink-0 lg:translate-x-0 lg:shadow-none;
   }
   #app-sidebar.is-open {
     @apply translate-x-0;
@@ -103,5 +104,20 @@
   .nv-reveal.is-visible {
     opacity: 1;
     transform: none;
+  }
+
+  /* Animasi masuk halaman aplikasi (kartu naik halus) */
+  @keyframes nvRise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .nv-anim {
+    animation: nvRise 0.5s ease both;
   }
 }
